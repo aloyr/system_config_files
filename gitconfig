@@ -21,7 +21,7 @@
 	default = tracking
 [alias]
   ; convenience aliases
-	br = branch -av
+	br = branch -avv
   cp = cherry-pick
 	ci = commit
 	cl = clone
