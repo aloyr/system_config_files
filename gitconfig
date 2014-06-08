@@ -6,6 +6,7 @@
 	autocrlf = false
 	safecrlf = true
 	quotepath = false
+  preloadindex = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
