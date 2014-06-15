@@ -8,7 +8,7 @@ packages = {'puppet': '0', 'facter': '0', 'hiera': '0'}
 
 print 'Checking puppet packages'
 for item in PyQuery(url).items('a'):
-  if (item.attr('href').find('rc') == -1) and (item.attr('href').find('dmg') != -1):
+  if (item.attr('href').find('rc') == -1) and (item.attr('href').find('hiera-puppet') == -1) and (item.attr('href').find('dmg') != -1):
     curPack = item.attr('href')[:-4].split('-')
     curVer  = curPack[1].split('.')
     preVer  = packages[curPack[0]].split('.')
