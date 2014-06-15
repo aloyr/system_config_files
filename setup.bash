@@ -1,5 +1,10 @@
 #!/bin/bash
 
+GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
+GITEMAIL=""
+
+. ./config
+
 if [ `id -u` -ne 0 ]; then
   echo "ERROR: You need root privileges to run this program."
   echo "Use 'sudo $0' instead"
@@ -25,7 +30,7 @@ function getAloyrFile() {
 function checkProfile() {
   echo "Checking for /etc/profile.d"
   if [ `grep profile.d /etc/profile > /dev/null; echo $?` -ne 0 ]; then
-    cat <<EOF >> /tmp/profile
+    cat <<EOF >> /etc/profile
 for PROFILE_SCRIPT in \$( ls /etc/profile.d/*.sh ); do
   . \$PROFILE_SCRIPT
 done
