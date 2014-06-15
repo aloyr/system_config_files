@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# setup conservative defaults
 GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
 GITEMAIL=""
 SHELL="/bin/bash"
 DOPYTHON=false
 DOVIM=false
+DOPUPPET=false
 
 if [ ! -f config ];then
   echo ""
@@ -151,5 +153,10 @@ else
   echo "Skipping python setup"
 fi
 
+if [ $DOPUPPET == true ]; then
+  puppet getPuppet.py
+else
+  echo "Skipping puppet download
+fi
 
 echo "Done."
