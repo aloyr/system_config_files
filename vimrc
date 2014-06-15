@@ -56,14 +56,14 @@ endif
 " -------------------------------------------------------------------------
 set swapfile
 if &directory =~# '^\.,'
-    let &directory = "/Users/peter/.vim/lib/swap," . &directory
+    let &directory = "~/.vim/lib/swap," . &directory
 endif
 " command line editing ----------------------------------------------------
 set wildmenu
 set wildmode=full
 set undofile
 if &undodir =~# '^\.\%(,\|$\)'
-    let &undodir = "/Users/peter/.vim/lib/undo," . &undodir
+    let &undodir = "~/.vim/lib/undo," . &undodir
 endif
 " executing external commands ---------------------------------------------
 " running make and jumping to errors --------------------------------------
