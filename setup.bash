@@ -12,7 +12,7 @@ if [ ! -f config ];then
   echo "At a minimum, you should set the GITEMAIL variable"
   echo "Example:"
   echo ""
-  echo "cat 'yourname@gmail.com' > config"
+  echo "cat 'GITEMAIL="yourname@gmail.com"' > config"
   echo ""
   exit 1
 else
