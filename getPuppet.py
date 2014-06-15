@@ -21,6 +21,7 @@ for item in PyQuery(url).items('a'):
       packages[curPack[0]] = curPack[1]
       proc = False
 
+foi = False
 for dmg in packages.keys():
   arq = dmg + '-' + packages[dmg] + '.dmg'
   locArq = os.environ['HOME'] + '/Downloads/' + arq
@@ -28,9 +29,11 @@ for dmg in packages.keys():
   if os.path.isfile(locArq):
     print locArq + ' is already downloaded'
   else:
+    foi = True
     print 'Downloading ' + arq + ' from ' + download
     file = open(locArq, 'wb')
     file.write(requests.get(download).content)
     file.close()
-
-print "done."
+if foi:
+  print 'Puppet dmg files downloaded to ' + os.environ['HOME'] + '/Downloads'
+print "Done."
