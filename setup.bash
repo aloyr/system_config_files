@@ -3,6 +3,7 @@
 GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
 GITEMAIL=""
 SHELL="/bin/bash"
+DOPYTHON=false
 
 if [ ! -f config ];then
   echo ""
@@ -92,6 +93,28 @@ function changeShell() {
   chsh -s $SHELL root
 }
 
+function setupPythonModule() {
+  if [ `pip show $1 | wc -l` -eq 0 ]; then
+    echo "Installing $1 module"
+    pip install $1
+  else
+    echo "$1 module already installed"
+  fi
+}
+
+function setupPython() {
+  echo "Checking Python setup"
+  if [ `which pip > /dev/null; echo $?` -ne 0 ]; then
+    echo "Installing pip"
+    easy_install pip
+  else
+    echo "pip is already installed"
+  fi
+  for module in requests pyquery; do
+    setupPythonModule $module
+  done
+}
+
 changeShell
 
 DSTDIR="/usr/local/bin/"
@@ -109,4 +132,11 @@ for aloyrDotFile in toprc vimrc gitconfig; do
 done
 
 checkProfile
+
+if [ $DOPYTHON == true ]; then
+  setupPython
+else
+  echo "Skipping python setup"
+fi
+
 echo "Done."
