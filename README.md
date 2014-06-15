@@ -1,7 +1,7 @@
 system_config_files
 ===================
 
-Miscellaneous configuration files
+Miscellaneous configuration files for Macs, but should work on \*nix too.
 
 [Most] dotfiles setup by running
 
@@ -9,7 +9,7 @@ Miscellaneous configuration files
 curl https://raw.githubusercontent.com/aloyr/system_config_files/master/setup.bash | sudo bash
 `
 
-You *will need* a file named _config_ on your current folder. You can create one with the following command:
+You **will need** a file named **config** on your current folder. You can create one with the following command:
 
 `
 echo 'GITEMAIL="yourname@gmail.com"' > config
