@@ -2,6 +2,7 @@
 
 GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
 GITEMAIL=""
+SHELL="/bin/bash"
 
 if [ ! -f config ];then
   echo ""
@@ -85,6 +86,13 @@ EOF
     echo "set_prompt already setup"
   fi
 }
+
+function changeShell() {
+  chsh -s $SHELL $USER
+  chsh -s $SHELL root
+}
+
+changeShell
 
 DSTDIR="/usr/local/bin/"
 for gitFile in git-completion.bash git-prompt.sh; do
