@@ -3,7 +3,7 @@ system_config_files
 
 Miscellaneous configuration files for Macs, but should work on \*nix too.
 
-[Most] dotfiles setup by running
+Setup [most] dotfiles by running
 
 `
 curl https://raw.githubusercontent.com/aloyr/system_config_files/master/setup.bash | sudo bash
