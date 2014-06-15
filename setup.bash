@@ -4,6 +4,7 @@ GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
 GITEMAIL=""
 SHELL="/bin/bash"
 DOPYTHON=false
+DOVIM=false
 
 if [ ! -f config ];then
   echo ""
@@ -115,6 +116,11 @@ function setupPython() {
   done
 }
 
+function setupVim() {
+  DSTDIR=$HOME
+  getAloyrDotFile vimrc
+}
+
 changeShell
 
 DSTDIR="/usr/local/bin/"
@@ -127,8 +133,8 @@ for aloyrFile in gitadd.bash gitpush.bash set_prompt.bash; do
 done
 
 DSTDIR=$HOME
-for aloyrDotFile in toprc vimrc gitconfig; do
-  getAloyrFile $aloyrFile
+for dotFile in toprc gitconfig; do
+  getAloyrDotFile $dotFile
 done
 
 checkProfile
@@ -138,5 +144,12 @@ if [ $DOPYTHON == true ]; then
 else
   echo "Skipping python setup"
 fi
+
+if [ $DOVIM == true ]; then
+  setupVim
+else
+  echo "Skipping python setup"
+fi
+
 
 echo "Done."
