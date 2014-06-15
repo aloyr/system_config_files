@@ -154,7 +154,7 @@ else
 fi
 
 if [ $DOPUPPET == true ]; then
-  puppet getPuppet.py
+  ./getPuppet.py
 else
   echo "Skipping puppet download
 fi

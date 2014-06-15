@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import requests, os
 from pyquery import PyQuery
 
