@@ -30,6 +30,7 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 function getGitFile() {
+  if [ ! -d $DSTDIR ]; then mkdir -p $DSTDIR; fi
   if [ -n $1 ]; then
     echo "Fetching $1"
     if [ -f $DSTDIR$1 ]; then
@@ -42,6 +43,7 @@ function getGitFile() {
 }
 
 function getAloyrFile() {
+  if [ ! -d $DSTDIR ]; then mkdir -p $DSTDIR; fi
   if [ -n $1 ]; then
     echo "Fetching $1"
     if [ -f $DSTDIR$1 ]; then
@@ -54,16 +56,16 @@ function getAloyrFile() {
 }
 
 function getAloyrDotFile() {
+  if [ ! -d $DSTDIR ]; then mkdir -p $DSTDIR; fi
   if [ -n $1 ]; then
     echo "Fetching $1"
     if [ -f $DSTDIR.$1 ]; then
       echo "File already in place"
     else
-      curl https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 2> /dev/null > $DSTDIR$1
-      chmod +x $DSTDIR$1
-      chown $USER $DSTDIR$aloyrFile
-      chmod -x $DSTDIR$aloyrFile
-      mv $DSTDIR{,.}$aloyrFile
+      curl https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 2> /dev/null > $DSTDIR.$1
+      chmod +x $DSTDIR.$1
+      chown $USER $DSTDIR.$1
+      chmod -x $DSTDIR.$1
     fi
   fi
 }
@@ -120,7 +122,6 @@ function setupPython() {
 }
 
 function setupVim() {
-  DSTDIR=$HOME
   getAloyrDotFile vimrc
 }
 
@@ -135,7 +136,7 @@ for aloyrFile in gitadd.bash gitpush.bash set_prompt.bash; do
   getAloyrFile $aloyrFile
 done
 
-DSTDIR=$HOME
+DSTDIR="$HOME/"
 for dotFile in toprc gitconfig; do
   getAloyrDotFile $dotFile
 done
