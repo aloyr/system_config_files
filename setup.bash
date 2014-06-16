@@ -36,7 +36,7 @@ function getGitFile() {
     if [ -f $DSTDIR$1 ]; then
       echo "File already in place"
     else
-      curl https://raw.githubusercontent.com/git/git/master/contrib/completion/$1 2> /dev/null > $DSTDIR$1
+      curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/$1 > $DSTDIR$1
       chmod +x $DSTDIR$1
     fi
   fi
@@ -49,7 +49,7 @@ function getAloyrFile() {
     if [ -f $DSTDIR$1 ]; then
       echo "File already in place"
     else
-      curl https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 2> /dev/null > $DSTDIR$1
+      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 > $DSTDIR$1
       chmod +x $DSTDIR$1
     fi
   fi
@@ -62,7 +62,7 @@ function getAloyrDotFile() {
     if [ -f $DSTDIR.$1 ]; then
       echo "File already in place"
     else
-      curl https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 2> /dev/null > $DSTDIR.$1
+      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 > $DSTDIR.$1
       chmod +x $DSTDIR.$1
       chown $USER $DSTDIR.$1
       chmod -x $DSTDIR.$1
@@ -156,13 +156,13 @@ else
 fi
 
 if [ $DOPUPPET == true ]; then
-  ./getPuppet.py
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getPuppet.py | python
 else
   echo "Skipping puppet download"
 fi
 
 if [ $DOPORTS == true ]; then
-  ./getPorts.py
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getPorts.py | python
 else
   echo "Skipping macports download"
 fi
