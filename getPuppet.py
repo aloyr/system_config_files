@@ -37,4 +37,3 @@ for dmg in packages.keys():
     file.close()
 if foi:
   print 'Puppet dmg files downloaded to ' + os.environ['HOME'] + '/Downloads'
-print "Done."

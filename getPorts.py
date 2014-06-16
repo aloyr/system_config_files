@@ -4,16 +4,18 @@ from pyquery import PyQuery
 
 url = 'http://www.macports.org/install.php'
 
+print "Checking macports package"
 req = requests.get(url)
 for link in re.findall(r'a href="[^"]*', req.text):
   if link.find('Mavericks') != -1:
     break
 
-link = link[8:-1]
+link = link[8:]
 arq = link[link.find('MacPorts-'):]
-download = os.enrivon['HOME'] + '/Downloads/' + arq
+download = os.environ['HOME'] + '/Downloads/' + arq
 
-if os.isfile(download):
+foi = False
+if os.path.isfile(download):
   print arq + ' is already downloaded'
 else:
   foi = True
@@ -22,4 +24,4 @@ else:
   file.write(requests.get(link).content)
   file.close()
 if foi:
-  print 'MacPorts dmg files downloaded to ' + os.environ['HOME'] + '/Downloads'
+  print 'MacPorts package file downloaded to ' + os.environ['HOME'] + '/Downloads'

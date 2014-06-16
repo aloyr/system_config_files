@@ -157,13 +157,13 @@ fi
 if [ $DOPUPPET == true ]; then
   ./getPuppet.py
 else
-  echo "Skipping puppet download
+  echo "Skipping puppet download"
 fi
 
 if [ $DOPORTS == true ]; then
   ./getPorts.py
 else
-  echo "Skipping macports download
+  echo "Skipping macports download"
 fi
 
 echo "Done."
