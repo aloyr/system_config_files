@@ -18,8 +18,11 @@
 	branch = auto
 	interactive = auto
 	diff = auto
+  ui = auto
 [push]
 	default = tracking
+[rerere]
+  enable = true
 [alias]
   ; convenience aliases
 	br = branch -avv
