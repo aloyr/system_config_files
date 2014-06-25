@@ -1,6 +1,8 @@
 " pathogen - must come first ----------------------------------------------
 call pathogen#infect()
 call pathogen#helptags()
+" crontab handling --------------------------------------------------------
+au BufEnter /private/tmp/crontab.* setl backupcopy=yes
 " important ---------------------------------------------------------------
 set nocompatible                                      "don't behave like Vi
 " moving around, searching and patterns -----------------------------------
