@@ -9,6 +9,12 @@ DOVIM=false
 DOPUPPET=false
 DOPORTS=false
 
+if [ `id -u` -ne 0 ]; then
+  echo "ERROR: You need root privileges to run this program."
+  echo "Use 'sudo $0' instead"
+  exit 1
+fi
+
 if [ ! -f config ];then
   echo ""
   echo "WARNING: missing config file"
@@ -33,12 +39,6 @@ if [ ! -f config ];then
   fi
 else
   . ./config
-fi
-
-if [ `id -u` -ne 0 ]; then
-  echo "ERROR: You need root privileges to run this program."
-  echo "Use 'sudo $0' instead"
-  exit 1
 fi
 
 function getGitFile() {
