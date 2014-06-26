@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # setup conservative defaults
-GITUSER=`finger $USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
+GITUSER=`finger $SUDO_USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
 GITEMAIL=""
 SHELL="/bin/bash"
 DOPYTHON=false
@@ -13,7 +13,7 @@ if [ ! -f config ];then
   echo ""
   echo "WARNING: missing config file"
   echo "You could create a config text file to add your customizations"
-  echo "At a minimum, you should set the GITEMAIL variable"
+  echo "If you do that, at a minimum, you should set the GITEMAIL variable"
   echo "Example:"
   echo ""
   echo "echo 'GITEMAIL="yourname@gmail.com"' > config"
@@ -23,8 +23,7 @@ if [ ! -f config ];then
   echo "https://github.com/aloyr/system_config_files/blob/master/example.config"
   echo ""
   echo "Alternatively, you can just enter your email below."
-  echo -ne "Please enter your email address (for git authorship purposes): "
-  read email
+  read -p "Please enter your email address (for git authorship purposes): " email
   if [ ${#email} -gt 5 ] && grep "@" <<<$email; then
     GITEMAIL=$email
     echo "Thank you, continuing with setup."
@@ -153,8 +152,8 @@ DSTDIR="$HOME/"
 for dotFile in toprc gitconfig; do
   getAloyrDotFile $dotFile
 done
-git config --global user.name=$GITUSER
-git config --global user.email=$GITEMAIL
+git config --global user.name "$GITUSER"
+git config --global user.email $GITEMAIL
 
 checkProfile
 
