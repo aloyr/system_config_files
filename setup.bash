@@ -153,6 +153,8 @@ DSTDIR="$HOME/"
 for dotFile in toprc gitconfig; do
   getAloyrDotFile $dotFile
 done
+git config --global user.name=$GITUSER
+git config --global user.email=$GITEMAIL
 
 checkProfile
 
