@@ -32,7 +32,6 @@ if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   exec 6<&0
   exec 0</dev/tty
   read -p "Please enter your email address (for git authorship purposes): " email
-  echo "email is $email"
   if [ ${#email} -gt 5 ] && grep "@" <<<$email; then
     GITEMAIL=$email
     echo "Thank you, continuing with setup."
