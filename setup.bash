@@ -39,7 +39,7 @@ if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
     exit 1
   fi
 else
-  . ./config
+  . ./config 2> /dev/null
 fi
 
 function getGitFile() {
