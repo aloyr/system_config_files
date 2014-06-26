@@ -11,14 +11,27 @@ DOPORTS=false
 
 if [ ! -f config ];then
   echo ""
-  echo "ERROR: missing config file"
-  echo "You should create a config text file to add your customizations"
+  echo "WARNING: missing config file"
+  echo "You could create a config text file to add your customizations"
   echo "At a minimum, you should set the GITEMAIL variable"
   echo "Example:"
   echo ""
   echo "echo 'GITEMAIL="yourname@gmail.com"' > config"
   echo ""
-  exit 1
+  echo "For more information about available customizations, refer to the"
+  echo "online example file located at:"
+  echo "https://github.com/aloyr/system_config_files/blob/master/example.config"
+  echo ""
+  echo "Alternatively, you can just enter your email below."
+  echo -ne "Please enter your email address (for git authorship purposes): "
+  read email
+  if [ ${#email} -gt 5 ] && grep "@" <<<$email; then
+    GITEMAIL=$email
+    echo "Thank you, continuing with setup."
+  else
+    echo "Error detected, stopping process."
+    exit 1
+  fi
 else
   . ./config
 fi
