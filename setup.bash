@@ -15,7 +15,7 @@ if [ `id -u` -ne 0 ]; then
   exit 1
 fi
 
-if [ ! -f config ];then
+if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   echo ""
   echo "WARNING: missing config file"
   echo "You could create a config text file to add your customizations"
@@ -29,7 +29,10 @@ if [ ! -f config ];then
   echo "https://github.com/aloyr/system_config_files/blob/master/example.config"
   echo ""
   echo "Alternatively, you can just enter your email below."
+  exec 6<&0
+  exec 0</dev/tty
   read -p "Please enter your email address (for git authorship purposes): " email
+  echo "email is $email"
   if [ ${#email} -gt 5 ] && grep "@" <<<$email; then
     GITEMAIL=$email
     echo "Thank you, continuing with setup."
