@@ -2,7 +2,9 @@
 
 # setup conservative defaults
 GITUSER=`finger $SUDO_USER|awk '$0 ~ /Name:/'|sed 's/.*Name: //g'`
-GITEMAIL=""
+if [ -z $GITEMAIL ]; then
+  GITEMAIL=""
+fi
 SHELL="/bin/bash"
 DOPYTHON=false
 DOVIM=false
