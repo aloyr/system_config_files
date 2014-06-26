@@ -28,15 +28,12 @@ if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   echo "online example file located at:"
   echo "https://github.com/aloyr/system_config_files/blob/master/example.config"
   echo ""
-  echo "Alternatively, you can just enter your email below."
-  exec 6<&0
-  exec 0</dev/tty
-  read -p "Please enter your email address (for git authorship purposes): " email
-  if [ ${#email} -gt 5 ] && grep "@" <<<$email; then
-    GITEMAIL=$email
+  echo "Alternatively, you can just enter your email below in the following 1-liner:"
+  echo 'curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/setup.bash | sudo GITEMAIL="youremail@gmail.com" bash'
+  if [ ${#GITEMAIL} -gt 5 ] && grep "@" <<<$GITEMAIL; then
     echo "Thank you, continuing with setup."
   else
-    echo "Error detected, stopping process."
+    echo "Error detected with the email address, stopping process."
     exit 1
   fi
 else
