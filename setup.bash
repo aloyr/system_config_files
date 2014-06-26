@@ -77,7 +77,7 @@ function getAloyrDotFile() {
     else
       curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 > $DSTDIR.$1
       chmod +x $DSTDIR.$1
-      chown $USER $DSTDIR.$1
+      chown $SUDO_USER $DSTDIR.$1
       chmod -x $DSTDIR.$1
     fi
   fi
