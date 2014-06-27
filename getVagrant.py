@@ -36,5 +36,6 @@ if foi:
 		call(['/usr/sbin/installer', '-pkg', '/Volumes/Vagrant/Vagrant.pkg', '-target', '/'])
 		call(['hdiutil', 'unmount', '/Volumes/Vagrant'])
 		call(['vagrant', 'plugin', 'install', 'vagrant-cachier', 'vagrant-hostsupdater', 'vagrant-triggers'])
+		call(['chmod', '-R', '777', '~/.vagrant.d/cache'])
 
 
