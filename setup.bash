@@ -182,4 +182,10 @@ else
   echo "Skipping macports download"
 fi
 
+if [ $DOVAGRANT == true ]; then
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getVagrant.py | python
+else
+  echo "Skipping vagrant download"
+fi
+
 echo "Done."
