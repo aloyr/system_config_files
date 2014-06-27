@@ -32,7 +32,7 @@ if foi:
 			print 'done'
 		print 'Vagrant dmg file downloaded to ' + os.environ['HOME'] + '/Downloads'
 		print 'Installing Vagrant'
-		call(['hdiutil', ',mount', locfile])
+		call(['hdiutil', 'mount', locfile])
 		call(['/usr/sbin/installer', '-pkg', '/Volumes/Vagrant/Vagrant.pkg', '-target', '/'])
-		call(['hdiutil', ',unmount', '/Volumes/Vagrant'])
+		call(['hdiutil', 'unmount', '/Volumes/Vagrant'])
 
