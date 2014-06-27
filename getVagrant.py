@@ -21,7 +21,7 @@ if foi:
 		print locfile + ' is already downloaded'
 	else:
 		stream = requests.get(remotefilename, stream = True)
-		with open(filename, 'wb') as fd:
+		with open(locfile, 'wb') as fd:
 			print "getting " + filename
 			count = 0
 			for chunk in stream.iter_content(4096):
