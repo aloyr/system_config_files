@@ -35,6 +35,6 @@ if foi:
 		call(['hdiutil', 'mount', locfile])
 		call(['/usr/sbin/installer', '-pkg', '/Volumes/Vagrant/Vagrant.pkg', '-target', '/'])
 		call(['hdiutil', 'unmount', '/Volumes/Vagrant'])
-		call(['vagrant', 'plugin', 'install', 'vagrant-cachier', 'vagrant-hostupdater', 'vagrant-triggers'])
+		call(['vagrant', 'plugin', 'install', 'vagrant-cachier', 'vagrant-hostsupdater', 'vagrant-triggers'])
 
 
