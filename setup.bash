@@ -138,6 +138,15 @@ function setupVim() {
   getAloyrDotFile vimrc
 }
 
+function getHelpers() {
+  eval DOIT=\$$1
+  if [ $DOIT == true ]; then
+    curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/get${1:2}.py | python
+  else
+    echo "Skipping $1 download"
+  fi
+}
+
 changeShell
 
 DSTDIR="/usr/local/bin/"
@@ -170,28 +179,8 @@ else
   echo "Skipping python setup"
 fi
 
-if [ $DOPUPPET == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getPuppet.py | python
-else
-  echo "Skipping puppet download"
-fi
-
-if [ $DOPORTS == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getPorts.py | python
-else
-  echo "Skipping macports download"
-fi
-
-if [ $DOVAGRANT == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getVagrant.py | python
-else
-  echo "Skipping vagrant download"
-fi
-
-if [ $DOVAGRANTMANAGER == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getVagrantManager.py | python
-else
-  echo "Skipping vagrant manager download"
-fi
+for i in DO{Puppet,Ports,Vagrant,VagrantManager,NodeJS}; do
+  getHelpers $i
+done
 
 echo "Done."
