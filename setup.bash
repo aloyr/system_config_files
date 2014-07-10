@@ -188,7 +188,7 @@ else
   echo "Skipping vagrant download"
 fi
 
-if [ $DOVAGRANT == true ]; then
+if [ $DOVAGRANTMANAGER == true ]; then
   curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getVagrantManager.py | python
 else
   echo "Skipping vagrant manager download"
