@@ -62,7 +62,7 @@ function getAloyrFile() {
     if [ -f $DSTDIR$1 ]; then
       echo "File already in place"
     else
-      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 > $DSTDIR$1
+      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/dotfiles/$1 > $DSTDIR$1
       chmod +x $DSTDIR$1
     fi
   fi
@@ -75,7 +75,7 @@ function getAloyrDotFile() {
     if [ -f $DSTDIR.$1 ]; then
       echo "File already in place"
     else
-      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/$1 > $DSTDIR.$1
+      curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/dotfiles/$1 > $DSTDIR.$1
       chmod +x $DSTDIR.$1
       chown $SUDO_USER $DSTDIR.$1
       chmod -x $DSTDIR.$1
@@ -171,25 +171,25 @@ else
 fi
 
 if [ $DOPUPPET == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getPuppet.py | python
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getPuppet.py | python
 else
   echo "Skipping puppet download"
 fi
 
 if [ $DOPORTS == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getPorts.py | python
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getPorts.py | python
 else
   echo "Skipping macports download"
 fi
 
 if [ $DOVAGRANT == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getVagrant.py | python
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getVagrant.py | python
 else
   echo "Skipping vagrant download"
 fi
 
 if [ $DOVAGRANT == true ]; then
-  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/getVagrantManager.py | python
+  curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/getVagrantManager.py | python
 else
   echo "Skipping vagrant manager download"
 fi
