@@ -33,10 +33,10 @@ if foi:
     print 'NodeJS file downloaded to ' + os.environ['HOME'] + '/Downloads'
     print 'Installing NodeJS'
     if locfile[-3:] == 'dmg':
-      dmg = subprocessPopen(['hdiutil','mount',locfile], stdout = subprocess.PIPE)
+      dmg = subprocess.Popen(['hdiutil','mount',locfile], stdout = subprocess.PIPE)
       vol = dmg.communicate()[0].split('\t')[-1].split('\n')[0]
       # TODO - install dmg file
-      subprocessPopen(['hdiutil','unmount',vol]).wait()
+      subprocess.Popen(['hdiutil','unmount',vol]).wait()
     if locfile[-3:] == 'pkg':
       subprocess.Popen(['/usr/sbin/installer', '-pkg', locfile, '-target', '/']).wait()
     print 'done'
