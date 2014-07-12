@@ -2,6 +2,7 @@ import requests, sys, os, shutil
 from pyquery import PyQuery
 from urlparse import urlparse
 from subprocess import call
+from distutils import dir_util
 
 url = 'https://github.com/lanayotech/vagrant-manager/releases/latest'
 
@@ -33,6 +34,19 @@ if foi:
         fd.write(chunk)
       print 'done'
     print 'Vagrant Manager dmg file downloaded to ' + os.environ['HOME'] + '/Downloads'
+    print 'Installing Vagrant Manager'
+    if locfile[-3:] == 'dmg':
+      dmg = subprocess.Popen(['hdiutil','mount',locfile], stdout = subprocess.PIPE)
+      vol = dmg.communicate()[0].split('\t')[-1].split('\n')[0]
+      # TODO - install dmg file
+      for item in os.listdir(vol):
+        if item[-3:] == 'app':
+          dir_util.copy_tree(vol + '/' + item, '/Applications/' + item)
+          break
+      subprocess.Popen(['hdiutil','unmount',vol]).wait()
+    if locfile[-3:] == 'pkg':
+      subprocess.Popen(['/usr/sbin/installer', '-pkg', locfile, '-target', '/']).wait()
+    print 'done'
     # exit(0)
     # # print 'Installing Vagrant Manager'
     # call(['hdiutil', 'mount', locfile])
