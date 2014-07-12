@@ -1,7 +1,7 @@
 import requests, sys, os, shutil
 from pyquery import PyQuery
 from urlparse import urlparse
-from subprocess import call
+import subprocess
 from distutils import dir_util
 
 url = 'https://github.com/lanayotech/vagrant-manager/releases/latest'
