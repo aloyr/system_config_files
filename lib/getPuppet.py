@@ -1,6 +1,9 @@
 #!/usr/bin/python
-import requests, os
+import requests, os, sys
 from pyquery import PyQuery
+import subprocess
+from distutils import dir_util
+
 
 url = 'http://downloads.puppetlabs.com/mac/'
 req = requests.get(url)
@@ -24,16 +27,36 @@ for item in PyQuery(url).items('a'):
 
 foi = False
 for dmg in packages.keys():
-  arq = dmg + '-' + packages[dmg] + '.dmg'
-  locArq = os.environ['HOME'] + '/Downloads/' + arq
-  download = url + arq
-  if os.path.isfile(locArq):
-    print locArq + ' is already downloaded'
+  filename = dmg + '-' + packages[dmg] + '.dmg'
+  locfile = os.environ['HOME'] + '/Downloads/' + filename
+  remotefilename = url + filename
+  if os.path.isfile(locfile):
+    print locfile + ' is already downloaded'
   else:
-    foi = True
-    print 'Downloading ' + arq + ' from ' + download
-    file = open(locArq, 'wb')
-    file.write(requests.get(download).content)
-    file.close()
-if foi:
-  print 'Puppet dmg files downloaded to ' + os.environ['HOME'] + '/Downloads'
+    stream = requests.get(remotefilename, stream = True)
+    with open(locfile, 'wb') as fd:
+      print "getting " + filename
+      count = 0
+      for chunk in stream.iter_content(4096):
+        count += 1
+        if count%100 == 0:
+          sys.stdout.write('.')
+        fd.write(chunk)
+    print filename + ' file downloaded to ' + os.environ['HOME'] + '/Downloads'
+    print 'Installing ' + filename 
+    if locfile[-3:] == 'dmg':
+      dmg = subprocess.Popen(['hdiutil','mount',locfile], stdout = subprocess.PIPE)
+      vol = dmg.communicate()[0].split('\t')[-1].split('\n')[0]
+      # TODO - install dmg file
+      for item in os.listdir(vol):
+        if item[-3:] == 'app':
+          dir_util.copy_tree(vol + '/' + item, '/Applications/' + item)
+          break
+        elif item[-3:] == 'pkg':
+          subprocess.Popen(['/usr/sbin/installer','-pkg',vol + '/' + item,'-target','/']).wait()
+          break
+      subprocess.Popen(['hdiutil','unmount',vol]).wait()
+    if locfile[-3:] == 'pkg':
+      subprocess.Popen(['/usr/sbin/installer', '-pkg', locfile, '-target', '/']).wait()
+    print 'done'
+ 
