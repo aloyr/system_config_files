@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import requests, os, subprocess, sys, traceback
+import requests, os, re, subprocess, sys, traceback
 from distutils import dir_util
 from pyquery import PyQuery
 
@@ -9,6 +9,7 @@ def download(url = None, downloadFolder = os.environ['HOME'] + '/Downloads/'):
 	installApps(downloadFiles(getURLs(url), downloadFolder))
 
 def getURLs(url):
+	print 'url is ' + url
 	try:
 		print 'using ' + url
 		result = []
@@ -36,7 +37,7 @@ def downloadFiles(urls, downloadFolder = os.environ['HOME'] + '/Downloads/'):
 		return None
 	result = []
 	for remotefilename in urls:
-		filename = remotefilename.split('/')[-1]
+		filename = re.sub(r'.*=','',remotefilename.split('/')[-1])
 		locfile = downloadFolder + filename
 		if os.path.isfile(locfile):
 			print locfile + ' is already downloaded'
