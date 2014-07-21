@@ -68,5 +68,5 @@ def installApps(files):
 			subprocess.Popen(['/usr/sbin/installer', '-pkg', locfile, '-target', '/']).wait()
 		print 'done'
 
-if __name__ == "__main__":
-    download(sys.argv[1])
+#if __name__ == "__main__":
+#    download(sys.argv[1])
