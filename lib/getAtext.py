@@ -1,5 +1,5 @@
 import urllib
-def urlimport(x):
+def urlimport(url):
   filepath = urllib.urlretrieve(url)[0]
   with open(filepath) as f:
     exec f in globals();
