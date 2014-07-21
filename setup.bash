@@ -140,7 +140,7 @@ function setupVim() {
 
 function getHelpers() {
   eval DOIT=\$$1
-  if [ $DOIT == true ]; then
+  if [ -n "$DOIT" ] && [ $DOIT == true ]; then
     curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/get${1:2}.py | python
   else
     echo "Skipping $1 download"
