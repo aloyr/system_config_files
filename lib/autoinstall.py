@@ -1,4 +1,3 @@
-#!/usr/bin/python
 import requests, os, re, subprocess, sys, traceback
 from distutils import dir_util
 from pyquery import PyQuery
