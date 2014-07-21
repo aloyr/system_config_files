@@ -6,4 +6,4 @@ def urlimport(url):
 
 urlimport('https://raw.githubusercontent.com/aloyr/system_config_files/master/lib/autoinstall.py')
 
-autoinstall.download('http://www.sequelpro.com/download')
+download('http://www.sequelpro.com/download')
