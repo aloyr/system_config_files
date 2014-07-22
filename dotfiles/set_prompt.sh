@@ -1,3 +1,4 @@
+HISTTIMEFORMAT="%d/%m/%y %T "
 # some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
