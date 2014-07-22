@@ -1,5 +1,5 @@
 #!/bin/bash
-HISTTIMEFORMAT="%d/%m/%y %T "
+HISTTIMEFORMAT="%Y-%m-%d %T "
 # some more ls aliases
 alias ll='ls -lG'
 alias la='ls -AG'
