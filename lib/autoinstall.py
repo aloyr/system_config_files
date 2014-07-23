@@ -21,9 +21,12 @@ def getURLs(url):
 					href = url + href
 				result.append(href)
 				print 'found ' + href
-				if result[-1].find('aText.dmg'):
-					version = links('#version')[0].text.replace('\n','').replace('\t','')
-					result[-1] = result[-1][:-4] + '-' + version + result[-1][-4:]
+				try:
+					if result[-1].find('aText.dmg'):
+						version = links('#version')[0].text.replace('\n','').replace('\t','')
+						result[-1] = result[-1][:-4] + '-' + version + result[-1][-4:]
+				except:
+					pass
 				return	result
 				break
 		sys.exit(0)
