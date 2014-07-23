@@ -21,6 +21,9 @@ def getURLs(url):
 					href = url + href
 				result.append(href)
 				print 'found ' + href
+				if result.find('aText.dmg'):
+					version = links('#version')[0].text.replace('\n','').replace('\t','')
+					result[-1] = result[-1][:-4] + '-' + version + result[-1][-4:]
 				return	result
 				break
 		sys.exit(0)
@@ -38,6 +41,8 @@ def downloadFiles(urls, downloadFolder = os.environ['HOME'] + '/Downloads/'):
 	for remotefilename in urls:
 		filename = re.sub(r'.*=','',remotefilename.split('/')[-1])
 		locfile = downloadFolder + filename
+		if remotefilename.find('aText'):
+			remotefilename[-1][0:remotefilename[-1].find('-')] + remotefilename[-1][-4:]
 		if os.path.isfile(locfile):
 			print locfile + ' is already downloaded'
 		else:
