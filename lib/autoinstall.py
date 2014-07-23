@@ -42,7 +42,7 @@ def downloadFiles(urls, downloadFolder = os.environ['HOME'] + '/Downloads/'):
 		filename = re.sub(r'.*=','',remotefilename.split('/')[-1])
 		locfile = downloadFolder + filename
 		if remotefilename.find('aText'):
-			remotefilename[-1][0:remotefilename[-1].find('-')] + remotefilename[-1][-4:]
+			remotefilename[0:remotefilename.find('-')] + remotefilename[-4:]
 		if os.path.isfile(locfile):
 			print locfile + ' is already downloaded'
 		else:
