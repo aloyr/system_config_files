@@ -179,7 +179,7 @@ else
   echo "Skipping python setup"
 fi
 
-for i in DO{Puppet,Ports,Vagrant,VagrantManager,NodeJS,Atext,TotalFinder,TotalTerminal,SQLPro}; do
+for i in DO{Puppet,Ports,Vagrant,VagrantManager,NodeJS,Atext,TotalFinder,TotalTerminal,SQLPro,KindleApp}; do
   getHelpers $i
 done
 
