@@ -45,7 +45,7 @@ def downloadFiles(urls, downloadFolder = os.environ['HOME'] + '/Downloads/'):
 		filename = re.sub(r'.*=','',remotefilename.split('/')[-1])
 		locfile = downloadFolder + filename
 		if remotefilename.find('aText') and remotefilename.find('-'):
-			remotefilename[0:remotefilename.find('-')] + remotefilename[-4:]
+			remotefilename = remotefilename[0:remotefilename.find('-')] + remotefilename[-4:]
 		if os.path.isfile(locfile):
 			print locfile + ' is already downloaded'
 		else:
@@ -76,5 +76,5 @@ def installApps(files):
 			subprocess.Popen(['/usr/sbin/installer', '-pkg', locfile, '-target', '/']).wait()
 		print 'done'
 
-#if __name__ == "__main__":
+# if __name__ == "__main__":
 #    download(sys.argv[1])
