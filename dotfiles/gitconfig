@@ -42,7 +42,7 @@
 	lg2d = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 	lg3 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg4 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ]%Creset' --abbrev-commit --date=relative
-  lg0 = "! git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'  --tags --branches=ref/remotes/origin/master `git tag|tail -n 1`^..refs/heads/master"
+  lg0 = "! git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'  --tags --branches=ref/remotes/origin/master `git tag|tail -n 1`^..refs/heads/master 2> /dev/null"
 
 ; stuff from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   ; log
