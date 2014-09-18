@@ -31,7 +31,7 @@
 	cl = clone
 	co = checkout
   dc = diff --cached
-	ft = fetch --all -p
+	ft = fetch --all -p -t
 	st = status -s
 
   ; log aliases
