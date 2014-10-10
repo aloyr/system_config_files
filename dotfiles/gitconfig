@@ -26,6 +26,7 @@
 [alias]
   ; convenience aliases
 	br = branch -avv
+  brs = branch -av
   cp = cherry-pick
 	ci = commit
 	cl = clone
