@@ -27,6 +27,7 @@
   ; convenience aliases
 	br = branch -avv
   brs = branch -av
+  brr = ls-remote
   cp = cherry-pick
 	ci = commit
 	cl = clone
