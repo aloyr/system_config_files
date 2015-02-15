@@ -160,6 +160,13 @@ xcodebuild -license
 xcode-select --install
 echo "done setting up xcode"
 
+if [ -d ~/Downloads ]; then
+  echo "download folder already exists"
+else
+  echo "creating download folder"
+  mkdir ~/Downloads
+fi
+
 changeShell
 
 DSTDIR="/usr/local/bin/"
