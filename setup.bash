@@ -155,6 +155,11 @@ function getHelpers() {
   fi
 }
 
+echo "setting up xcode"
+xcodebuild -license
+xcode-select --install
+echo "done setting up xcode"
+
 changeShell
 
 DSTDIR="/usr/local/bin/"
