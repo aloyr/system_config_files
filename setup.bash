@@ -18,7 +18,7 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 for file in xcodebuild xcode-select; do
-  if [ $(which $i | wc -l) -eq 0 ]; then
+  if [ $(which $file | wc -l) -eq 0 ]; then
     echo "xcode is not installed." 
     echo "please install xcode before continuing." 
     exit 1
