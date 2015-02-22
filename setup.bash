@@ -17,13 +17,15 @@ if [ `id -u` -ne 0 ]; then
   exit 1
 fi
 
-for file in xcodebuild xcode-select; do
-  if [ $(which $file | wc -l) -eq 0 ]; then
-    echo "xcode is not installed." 
-    echo "please install xcode before continuing." 
-    exit 1
-  fi
-done
+if [ $(uname -v | grep ^Darwin > /dev/null ; echo $?) -eq 0 ];then
+  for file in xcodebuild xcode-select; do
+    if [ $(which $file | wc -l) -eq 0 ]; then
+      echo "xcode is not installed."
+      echo "please install xcode before continuing."
+      exit 1
+    fi
+  done
+fi
 
 if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   echo ""
