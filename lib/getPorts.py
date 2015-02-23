@@ -7,7 +7,7 @@ url = 'http://www.macports.org/install.php'
 print "Checking macports package"
 req = requests.get(url)
 for link in re.findall(r'a href="[^"]*', req.text):
-  if link.find('Mavericks') != -1:
+  if link.find('Yosemite') != -1:
     break
 
 link = link[8:]
