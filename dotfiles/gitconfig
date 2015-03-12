@@ -26,6 +26,7 @@
 [alias]
   ; convenience aliases
 	br = branch -avv
+	bra = branch -a
   brs = branch -av
   brr = "!for i in `git ls-remote -h origin | awk 'BEGIN {FS=\"/\"} $0 ~ /heads/ {print \"origin/\" $3}'`; do git log --format='%at %ad - '`echo $i`' - %aN' -n 1 $i; done|sort -r;"
   cp = cherry-pick
