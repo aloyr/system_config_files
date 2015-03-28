@@ -36,6 +36,7 @@
   dc = diff --cached
 	ft = fetch --all -p -t
 	st = status -s
+  root = rev-parse --show-toplevel
 
   ; log aliases
 	lg = log --pretty --oneline --graph
