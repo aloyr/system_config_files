@@ -1,11 +1,18 @@
 #!/bin/bash
 HISTTIMEFORMAT="%Y-%m-%d %T "
 # some more ls aliases
-alias ll='ls -lG'
-alias la='ls -AG'
-alias l='ls -CFG'
+[[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
+alias ll="ls -l$color"
+alias la="ls -A$color"
+alias l="ls -CF$color"
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
+
+# setup php version if MAMPPro is found
+if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
+  PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
+  export PATH=/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH
+fi
 
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'

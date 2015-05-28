@@ -1,10 +1,17 @@
 HISTTIMEFORMAT="%Y-%m-%d %T "
 # some more ls aliases
-alias ll='ls -l'
-alias la='ls -A'
-alias l='ls -CF'
+[[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
+alias ll="ls -l$color"
+alias la="ls -A$color"
+alias l="ls -CF$color"
 
- # Set prompt
+# setup php version if MAMPPro is found
+if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
+  PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
+  export PATH=/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH
+fi
+
+# Set prompt
 TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
 if [ $USUARIO -eq 0 ]; then
