@@ -4,6 +4,8 @@ HISTTIMEFORMAT="%Y-%m-%d %T "
 alias ll="ls -l$color"
 alias la="ls -A$color"
 alias l="ls -CF$color"
+alias pvenv3='python3.4 -m venv venv_${PWD##*/} && . venv_${PWD##*/}/bin activate'
+alias pvenv2='python2.7 -m virtualenv venv_${PWD##*/} && . venv_${PWD##*/}/bin activate'
 
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
