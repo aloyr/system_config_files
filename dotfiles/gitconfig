@@ -34,7 +34,8 @@
 	cl = clone
 	co = checkout
   dc = diff --cached
-	ft = fetch --all -p -t
+	ft = fetch --all -p
+	ftt = fetch --all -p -t
 	st = status -s
   root = rev-parse --show-toplevel
 
