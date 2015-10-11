@@ -61,11 +61,18 @@ function install() {
   esac
 }
 
+echo "about to check for MacPorts..."
 if [ $(port help &> /dev/null; echo $?) -ne 0 ]; then
+  echo "need to install..."
   portURL=$(curl https://www.macports.org/install.php | grep 'downloads.sourceforge.net/project/macports/MacPorts' | grep $(sw_vers -productVersion) | sed 's/.*href="\([^"]*\)".*/\1/g' | uniq)
-  portPKG=$(echo $portURL | sed 's/.*\/\([^/]*\)$/\1/g')
-  curl -o ~/Downloads/$portPKG $portURL
-  install ~/Downloads/$portPKG
+  portPKG=~/Downloads/$(echo $portURL | sed 's/.*\/\([^/]*\)$/\1/g')
+  curl -o $portPKG $portURL
+  if [ $(file $portPKG | grep HTML &> /dev/null; echo $?) -eq 0 ]; then
+    echo "found redirect file, trying again"
+    portURL=$(cat $portPKG | grep 'pkg' | grep $(sw_vers -productVersion) | sed 's/.*href="\([^"]*\)".*/\1/g' | uniq)
+    curl -o $portPKG $portURL
+  fi
+  install $portPKG
 fi
 
 if [ $(port echo installed | grep ^libxml2 | wc -l) -ne 1 ]; then
