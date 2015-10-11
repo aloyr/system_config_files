@@ -27,6 +27,48 @@ if [ $(uname -v | grep ^Darwin > /dev/null ; echo $?) -eq 0 ];then
   done
 fi
 
+if [ $(which pip > /dev/null; echo $?) -ne 0 ]; then
+  easy_install pip
+fi
+
+function install() {
+  echo "inside install - $1"
+  ext=$(echo $1 | sed 's/.*[^\.]*\.\([^\.]*\)$/\1/g')
+  case $ext in
+  "pkg")
+    echo "inside pkg"
+    /usr/sbin/installer -pkg $1 -target /
+    ;;
+  "dmg")
+    echo "inside dmg"
+    volume=$(hdutil mount $1 | grep Volumes | sed 's/.*\/Volumes/\/Volumes/g')
+    volume_queue="$volume_queue; $volume"
+    if [ $(cp -a $volume/*.app /Applications/ &> /dev/null; echo $?) -ne 0 ]; then
+      echo "inside if"
+      for file in ls $volume/*.{dmg,pkg}; do
+        echo "inside for"
+        install $file
+      done
+    fi
+    echo "about to unmount $volume"
+    umount $(echo $volume_queue | awk 'function ltrim(s) { sub(/^[ \t\r\n]+/, "", s); return s } function rtrim(s) { sub(/[ \t\r\n]+$/, "", s); return s } function trim(s)  { return rtrim(ltrim(s)); } BEGIN {FS=";"} {for (i=1; i<NF; i++) {if (length(trim($i)) > 0) print $i}}' | tail -n 1)
+    ;;
+  esac
+}
+
+if [ $(port help &> /dev/null; echo $?) -ne 0 ]; then
+  portURL=$(curl https://www.macports.org/install.php | grep 'downloads.sourceforge.net/project/macports/MacPorts' | grep $(sw_vers -productVersion) | sed 's/.*href="\([^"]*\)".*/\1/g' | uniq)
+  portPKG=$(echo $portURL | sed 's/.*\/\([^/]*\)$/\1/g')
+  curl -o ~/Downloads/$portPKG $portURL
+  install ~/Downloads/$portPKG
+fi
+
+if [ $(port echo installed | grep ^libxml2 | wc -l) -ne 1 ]; then
+  port install libxml2
+fi
+
+pip install -U requests pyquery
+
 if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   echo ""
   echo "WARNING: missing config file"
