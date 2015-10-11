@@ -27,7 +27,7 @@ if [ $(uname -v | grep ^Darwin > /dev/null ; echo $?) -eq 0 ];then
   done
 fi
 
-if [ $(xcode-select -p) -ne 0 ]; then
+if [ $(xcode-select -p; echo $?) -ne 0 ]; then
   echo "xcode tools are not installed, trying to install now"
   xcode-select --install
 fi
