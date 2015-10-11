@@ -193,6 +193,11 @@ function setupPython() {
 
 function setupVim() {
   getAloyrDotFile vimrc
+  cd ~/
+  git clone https://github.com/aloyr/vimrc.git .vim
+  cd .vim
+  git submodule init
+  git submodule update --recursive
 }
 
 function getHelpers() {
