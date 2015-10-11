@@ -27,6 +27,11 @@ if [ $(uname -v | grep ^Darwin > /dev/null ; echo $?) -eq 0 ];then
   done
 fi
 
+if [ $(xcode-select -p) -ne 0 ]; then
+  echo "xcode tools are not installed, trying to install now"
+  xcode-select --install
+fi
+
 if [ $(which pip > /dev/null; echo $?) -ne 0 ]; then
   easy_install pip
 fi
@@ -246,5 +251,9 @@ fi
 for i in DO{Puppet,Ports,Vagrant,VagrantManager,NodeJS,Atext,TotalFinder,TotalTerminal,SQLPro,KindleApp}; do
   getHelpers $i
 done
+
+if [ -d ~/.vagrant.d ]; then
+  chown -R $SUDO_USER:staff ~/.vagrant.d
+fi
 
 echo "Done."
