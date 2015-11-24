@@ -9,6 +9,7 @@ alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/download
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias pvenv3='python3.4 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias pvenv2='python2.7 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/activate'
+alias tmux='TERM=xterm-256color tmux'
 
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
