@@ -6,6 +6,7 @@ alias ll="ls -l$color"
 alias la="ls -A$color"
 alias l="ls -CF$color"
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+alias speedtest100='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias pvenv3='python3.4 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias pvenv2='python2.7 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/activate'
