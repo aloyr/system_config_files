@@ -1,6 +1,8 @@
 #!/bin/bash
 HISTTIMEFORMAT="%Y-%m-%d %T "
 HISTSIZE=""
+shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
 [[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
 alias ll="ls -l$color"
