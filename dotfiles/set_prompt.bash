@@ -23,6 +23,10 @@ if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
   export PATH=/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH
 fi
 
+if [ -d ~/.composer/vendor/bin ]; then
+  export PATH="$HOME/.composer/vendor/bin:$PATH"
+fi
+
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
 alias composer='php /usr/local/bin/composer.phar'
