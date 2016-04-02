@@ -145,8 +145,10 @@ TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
 
 # prepping environment
-# from https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh
-. /usr/local/bin/drush.complete.sh
+if [ $(which drush &> /dev/null | echo $?) -eq 0 ]; then
+  # from https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh
+  . /usr/local/bin/drush.complete.sh
+fi
 # from https://github.com/git/git/raw/master/contrib/completion/git-completion.bash
 . /usr/local/bin/git-completion.bash
 # from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
