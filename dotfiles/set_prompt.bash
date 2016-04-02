@@ -145,7 +145,7 @@ TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
 
 # prepping environment
-if [ $(which drush &> /dev/null | echo $?) -eq 0 ]; then
+if [ $(which drush &> /dev/null ; echo $?) -eq 0 ]; then
   # from https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh
   . /usr/local/bin/drush.complete.sh
 fi
