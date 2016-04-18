@@ -12,6 +12,16 @@ alias pvenv2='python2.7 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
 
+# check ssl expiration
+function ssl_check() {
+  if [ -z ${1+x} ] ; then
+    echo "usage: ssl_check <domain:port>"
+  else
+    domain=$([[ $1 =~ [a-zA-Z.]*:[0-9]* ]] && echo "$1" || echo "$1:443")
+    echo | openssl s_client -connect $domain 2>/dev/null | openssl x509 -noout -dates
+  fi
+}
+
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
   PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
