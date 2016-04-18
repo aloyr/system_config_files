@@ -29,6 +29,17 @@ fi
 
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
+
+# check ssl expiration
+function ssl_check() {
+  if [ -z ${1+x} ] ; then
+    echo "usage: ssl_check <domain:port>"
+  else
+    domain=$([[ $1 =~ [a-zA-Z.]*:[0-9]* ]] && echo "$1" || echo "$1:443")
+    echo | openssl s_client -connect $domain 2>/dev/null | openssl x509 -noout -dates
+  fi
+}
+
 alias composer='php /usr/local/bin/composer.phar'
 
 export EDITOR=vim
