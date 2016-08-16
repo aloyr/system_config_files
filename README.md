@@ -10,4 +10,3 @@ Setup [most] dotfiles, bash and git prompts by running:
 You **can optionally create** a file named **config** on your current folder. You can create a minimal file with the following command:
 
     # echo 'GITEMAIL="yourname@gmail.com"' > config
-
