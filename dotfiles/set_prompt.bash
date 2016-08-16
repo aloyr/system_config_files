@@ -44,6 +44,20 @@ alias composer='php /usr/local/bin/composer.phar'
 
 export EDITOR=vim
 
+# colorful man pages
+# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+            man "$@"
+}
+
 # color setup
 # Attribute codes: 
 # 00=none 01=bold 04=underscore 05=blink 07=reverse 08=concealed
@@ -179,4 +193,3 @@ if [ $USUARIO -eq 0 ]; then
 else
   PS1="$RESET# \$(errCode) $GREEN_BOLD\u@\h$BLUE_BOLD($TTYNAME) \w $MAGENTA_NORMAL\$(__git_ps1 '(%s)')$RESET\n"
 fi
-
