@@ -41,7 +41,7 @@ function ssl_check() {
   fi
 }
 
-alias composer='php /usr/local/bin/composer.phar'
+#alias composer='php /usr/local/bin/composer.phar'
 
 export EDITOR=vim
 
