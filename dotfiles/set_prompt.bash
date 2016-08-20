@@ -1,6 +1,7 @@
 #!/bin/bash
 HISTTIMEFORMAT="%Y-%m-%d %T "
 HISTSIZE=""
+HISTCONTROL=ignorespace
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
