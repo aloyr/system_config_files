@@ -17,6 +17,7 @@ alias pvenv2='python2.7 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin
 alias tmux='TERM=xterm-256color tmux'
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
+alias dignsa='dig +noall +short +answer'
 
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
