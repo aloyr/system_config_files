@@ -1,0 +1,14 @@
+#!/usr/bin/python
+import sys, json, requests
+url = 'https://www.maxmind.com/geoip/v2.1/city/%%?use-downloadable-db=1&demo=1'
+for ip in sys.argv[1:]:
+    request = requests.get(url.replace('%%', ip))
+    response = json.loads(request.text)
+    print '-' * 80
+    print 'ip: ' + ip
+    print 'org: ' + response['traits']['organization']
+    print 'isp: ' + response['traits']['isp']
+    print 'state: ' + response['subdivisions'][0]['names']['en']
+    print 'country: ' + response['country']['names']['en']
+    print 'tz: ' + response['location']['time_zone']
+    print 'zip: ' + response['postal']['code']
