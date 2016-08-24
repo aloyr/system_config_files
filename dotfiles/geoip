@@ -6,9 +6,16 @@ for ip in sys.argv[1:]:
     response = json.loads(request.text)
     print '-' * 80
     print 'ip: ' + ip
-    print 'org: ' + response['traits']['organization']
-    print 'isp: ' + response['traits']['isp']
-    print 'state: ' + response['subdivisions'][0]['names']['en']
-    print 'country: ' + response['country']['names']['en']
-    print 'tz: ' + response['location']['time_zone']
-    print 'zip: ' + response['postal']['code']
+    if 'traits' in response:
+        if 'organization' in response['traits']:
+            print 'org: ' + response['traits']['organization']
+        if 'isp' in response['traits']:
+            print 'isp: ' + response['traits']['isp']
+    if 'subdivisions' in response:
+        print 'state: ' + response['subdivisions'][0]['names']['en']
+    if 'country' in response:
+        print 'country: ' + response['country']['names']['en']
+    if 'tz' in response:
+        print 'tz: ' + response['location']['time_zone']
+    if 'postal' in response:
+        print 'zip: ' + response['postal']['code']
