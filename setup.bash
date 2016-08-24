@@ -235,7 +235,7 @@ for gitFile in git-completion.bash git-prompt.sh; do
   getGitFile $gitFile
 done
 
-for aloyrFile in gitadd.bash gitpush.bash set_prompt.bash; do
+for aloyrFile in gitadd.bash gitpush.bash set_prompt.bash geoip; do
   getAloyrFile $aloyrFile
 done
 
