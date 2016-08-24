@@ -4,7 +4,7 @@ url = 'https://www.maxmind.com/geoip/v2.1/city/%%?use-downloadable-db=1&demo=1'
 for ip in sys.argv[1:]:
     request = requests.get(url.replace('%%', ip))
     response = json.loads(request.text)
-    print '-' * 80
+    print '-' * 25
     print 'ip: ' + ip
     if 'traits' in response:
         if 'organization' in response['traits']:
