@@ -9,6 +9,8 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 alias ll="ls -l$color"
 alias la="ls -A$color"
 alias l="ls -CF$color"
+
+# other convenience aliases
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 alias speedtest100='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
@@ -18,6 +20,7 @@ alias tmux='TERM=xterm-256color tmux'
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
 alias dignsa='dig +noall +short +answer'
+alias packtrename='ls [0-9]*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
