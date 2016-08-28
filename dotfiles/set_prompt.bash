@@ -20,7 +20,7 @@ alias tmux='TERM=xterm-256color tmux'
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
 alias dignsa='dig +noall +short +answer'
-alias packtrename='ls [0-9]*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
+alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
