@@ -32,6 +32,14 @@ if [ -d ~/.composer/vendor/bin ]; then
   export PATH="$HOME/.composer/vendor/bin:$PATH"
 fi
 
+if [ -d ~/Library/Android/sdk/platform-tools ]; then
+  export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+fi
+
+if [ -d ~/Library/Android/sdk/tools ]; then
+  export PATH="$HOME/Library/Android/sdk/tools:$PATH"
+fi
+
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
 
