@@ -22,6 +22,7 @@ alias paths='echo $PATH | tr : "\n" | sort'
 alias dignsa='dig +noall +short +answer'
 alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
+# PATH settings
 # setup php version if MAMPPro is found
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
   PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
@@ -178,6 +179,12 @@ function errCode() {
   fi
 }
 
+function runThis() {
+  if [ -f $1 ]; then
+    . $1
+  fi
+}
+
 # Set prompt
 TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
@@ -185,12 +192,12 @@ USUARIO=`id -u`
 # prepping environment
 if [ $(which drush &> /dev/null ; echo $?) -eq 0 ]; then
   # from https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh
-  . /usr/local/bin/drush.complete.sh
+  runThis '/usr/local/bin/drush.complete.sh'
 fi
 # from https://github.com/git/git/raw/master/contrib/completion/git-completion.bash
-. /usr/local/bin/git-completion.bash
+runThis '/usr/local/bin/git-completion.bash'
 # from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
-. /usr/local/bin/git-prompt.sh
+runThis '/usr/local/bin/git-prompt.sh'
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
