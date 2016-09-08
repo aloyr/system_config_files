@@ -41,6 +41,9 @@ set shiftwidth=2
 set softtabstop=2
 set tabstop=2
 set shiftround                    "round > and < to multiples of shiftwidth
+set list
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+set cursorline
 " folding -----------------------------------------------------------------
 set foldmethod=marker
 set foldmarker={{{,}}}
