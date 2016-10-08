@@ -66,7 +66,11 @@ function portupgrade() {
       curl -s $PKGURL > $PKGNAME
       sudo installer -pkg $PKGNAME -target /
       rm $PKGNAME
-      touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+      CLUFILE="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+      touch $CLUFILE
+      CLU=$(softwareupdate -l | sed -n 's/.*\*.*\(Command Line.*\)$/\1/gp')
+      softwareupdate -i "$CLU" -v
+      rm $CLUFILE
     fi
   else
     echo "this command only works on macOS."
