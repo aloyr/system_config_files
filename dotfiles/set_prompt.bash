@@ -55,6 +55,21 @@ function ssl_check() {
   fi
 }
 
+# sets up xcode on macOS
+function setupxcode() {
+  if [ $(uname -s) == "Darwin" ]; then
+    CLUFILE="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
+    touch $CLUFILE
+    CLU=$(softwareupdate -l | sed -n 's/.*\*.*\(Command Line.*\)$/\1/gp')
+    if [ ! -z $CLU ]; then
+      softwareupdate -i "$CLU" -v
+    fi
+    rm $CLUFILE
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
 # set port auto-update alias if on a mac
 function portupgrade() {
   if [ $(uname -s) == "Darwin" ]; then
@@ -66,11 +81,7 @@ function portupgrade() {
       curl -s $PKGURL > $PKGNAME
       sudo installer -pkg $PKGNAME -target /
       rm $PKGNAME
-      CLUFILE="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
-      touch $CLUFILE
-      CLU=$(softwareupdate -l | sed -n 's/.*\*.*\(Command Line.*\)$/\1/gp')
-      softwareupdate -i "$CLU" -v
-      rm $CLUFILE
+      setupxcode
     fi
   else
     echo "this command only works on macOS."
