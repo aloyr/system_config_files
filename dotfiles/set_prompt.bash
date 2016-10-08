@@ -70,7 +70,7 @@ function setupxcode() {
   fi
 }
 
-# set port auto-update alias if on a mac
+# set port version auto-upgrade alias if on a mac
 function portupgrade() {
   if [ $(uname -s) == "Darwin" ]; then
     OSVERSION=$(sw_vers -productVersion)
@@ -83,6 +83,24 @@ function portupgrade() {
       rm $PKGNAME
       setupxcode
     fi
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
+# set port auto-update alias if on a mac
+function portupgrade() {
+  if [ $(uname -s) == "Darwin" ]; then
+    sudo port selfupdate
+    sudo port upgrade outdated
+    for action in clean uninstall; do 
+      sudo port $action inactive
+    done
+    while [ $(port echo leaves | wc -l) -gt 0 ]; do
+      for action in echo clean uninstall; do
+        sudo port $action leaves
+      done
+    done
   else
     echo "this command only works on macOS."
   fi
