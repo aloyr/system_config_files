@@ -66,6 +66,7 @@ function portupgrade() {
       curl -s $PKGURL > $PKGNAME
       sudo installer -pkg $PKGNAME -target /
       rm $PKGNAME
+      touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
     fi
   else
     echo "this command only works on macOS."
