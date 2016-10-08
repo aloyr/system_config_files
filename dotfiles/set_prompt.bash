@@ -55,6 +55,23 @@ function ssl_check() {
   fi
 }
 
+# set port auto-update alias if on a mac
+function portupgrade() {
+  if [ $(uname -s) == "Darwin" ]; then
+    OSVERSION=$(sw_vers -productVersion)
+    PKGURL=$(curl -s https://www.macports.org/install.php | sed -n 's/.*"\([^"]*'$OSVERSION'[^"]*\.pkg\)".*/\1/gp' | head -n 1)
+    if [ ! -z $PKGURL ]; then
+      PKGFILE=$(echo $PKGURL | sed 's/.*\/\([^/]*\)$/\1/g')
+      PKGNAME="/tmp/$PKGFILE"
+      curl -s $PKGURL > $PKGNAME
+      sudo installer -pkg $PKGNAME -target /
+      rm $PKGNAME
+    fi
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
 #alias composer='php /usr/local/bin/composer.phar'
 
 export EDITOR=vim
