@@ -45,6 +45,26 @@ fi
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
 
+# setup terminusupdate if it exists
+function terminusupdate() {
+  if [ $(which terminus) ]; then 
+    TERMINUSLOCAL=$(which terminus)
+    TERMINUSPROJECTURL="https://github.com/pantheon-systems/terminus/releases/"
+    TERMINUSVERSIONLOCAL=$(terminus cli info | sed -n 's/.*Terminus version[^0-9]*\([0-9\.]*\)[^0-9]*/\1/gp')
+    TERMINUSSITEURL=$(curl -s $TERMINUSPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/terminus\)".*/https:\/\/github.com\1/gp' | head -n 1)
+    TERMINUSVERSIONSITE=$(echo $TERMINUSSITEURL | sed -n 's/.*\/\([0-9][0-9\.]*\)\/[^0-9\.]*/\1/p')
+    if [ $TERMINUSVERSIONLOCAL != $TERMINUSVERSIONSITE ]; then
+      echo "Installed version: $TERMINUSVERSIONLOCAL"
+      echo "Available version: $TERMINUSVERSIONSITE"
+      echo "Downloading new version."
+      sudo curl -s $TERMINUSSITEURL -Lo $TERMINUSLOCAL
+      sudo chmod +x $TERMINUSLOCAL
+    else
+      echo "Latest version of Terminus is already installed."
+    fi
+  fi
+}
+
 # check ssl expiration
 function ssl_check() {
   if [ -z ${1+x} ] ; then
