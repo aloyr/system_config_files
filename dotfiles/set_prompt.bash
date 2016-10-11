@@ -126,7 +126,10 @@ function portupgrade() {
   fi
 }
 
-#alias composer='php /usr/local/bin/composer.phar'
+# only setup composer alias if needed
+if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
+  alias composer='php /usr/local/bin/composer.phar'
+fi
 
 export EDITOR=vim
 
