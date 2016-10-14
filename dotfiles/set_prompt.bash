@@ -47,21 +47,27 @@ fi
 
 # setup terminusupdate if it exists
 function terminusupdate() {
+  echo "detecting existing terminus version"
   if [ $(which terminus) ]; then 
     TERMINUSLOCAL=$(which terminus)
-    TERMINUSPROJECTURL="https://github.com/pantheon-systems/terminus/releases/"
     TERMINUSVERSIONLOCAL=$(terminus cli info | sed -n 's/.*Terminus version[^0-9]*\([0-9\.]*\)[^0-9]*/\1/gp')
-    TERMINUSSITEURL=$(curl -s $TERMINUSPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/terminus\)".*/https:\/\/github.com\1/gp' | head -n 1)
-    TERMINUSVERSIONSITE=$(echo $TERMINUSSITEURL | sed -n 's/.*\/\([0-9][0-9\.]*\)\/[^0-9\.]*/\1/p')
-    if [ $TERMINUSVERSIONLOCAL != $TERMINUSVERSIONSITE ]; then
-      echo "Installed version: $TERMINUSVERSIONLOCAL"
-      echo "Available version: $TERMINUSVERSIONSITE"
-      echo "Downloading new version."
-      sudo curl -s $TERMINUSSITEURL -Lo $TERMINUSLOCAL
-      sudo chmod +x $TERMINUSLOCAL
-    else
-      echo "Latest version of Terminus is already installed."
-    fi
+    echo "found version $TERMINUSVERSIONLOCAL at $TERMINUSLOCAL"
+  else
+    TERMINUSLOCAL="/usr/local/bin/terminus"
+    TERMINUSVERSIONLOCAL="0.0"
+    echo "no terminus found, installing latest version"
+  fi
+  TERMINUSPROJECTURL="https://github.com/pantheon-systems/terminus/releases/"
+  TERMINUSSITEURL=$(curl -s $TERMINUSPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/terminus\)".*/https:\/\/github.com\1/gp' | head -n 1)
+  TERMINUSVERSIONSITE=$(echo $TERMINUSSITEURL | sed -n 's/.*\/\([0-9][0-9\.]*\)\/[^0-9\.]*/\1/p')
+  if [ $TERMINUSVERSIONLOCAL != $TERMINUSVERSIONSITE ]; then
+    echo "Installed version: $TERMINUSVERSIONLOCAL"
+    echo "Available version: $TERMINUSVERSIONSITE"
+    echo "Downloading new version."
+    sudo curl -s $TERMINUSSITEURL -Lo $TERMINUSLOCAL
+    sudo chmod +x $TERMINUSLOCAL
+  else
+    echo "Latest version of Terminus is already installed."
   fi
 }
 
