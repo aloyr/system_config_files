@@ -71,6 +71,14 @@ function terminusupdate() {
   fi
 }
 
+# update this file
+function updatepromptfile() {
+  PROMPTFILE="/usr/local/bin/set_prompt.bash"
+  sudo curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/dotfiles/set_prompt.bash -o $PROMPTFILE
+  sudo chmod +x $PROMPTFILE
+  . $PROMPTFILE
+}
+
 # check ssl expiration
 function ssl_check() {
   if [ -z ${1+x} ] ; then
