@@ -109,7 +109,7 @@ function portupgrade() {
 }
 
 # set port auto-update alias if on a mac
-function portupgrade() {
+function portupdate() {
   if [ $(uname -s) == "Darwin" ]; then
     sudo port selfupdate
     sudo port upgrade outdated
@@ -121,6 +121,40 @@ function portupgrade() {
         sudo port $action leaves
       done
     done
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
+# setup vagrant alias if on a mac
+function vagrantsetup() {
+  if [ $(uname -s) == "Darwin" ]; then
+    echo "installing vagrant"
+    echo "enter your password when/if prompted"
+    VAGRANTURL=$(curl -s https://www.vagrantup.com/downloads.html | sed -n 's/.*a href="\([^"]*\.dmg\)".*/\1/pg')
+    curl -s $VAGRANTURL -o ~/Downloads/vagrant.dmg || exit $(echo $?)
+    VOLUME=$(hdiutil mount ~/Downloads/vagrant.dmg | sed -n 's/.*\(\/Volumes.*\)/\1/pg')
+    sudo installer -pkg /Volumes/Vagrant/Vagrant.pkg -target /
+    hdiutil unmount $VOLUME
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
+# set vagrant auto update alias if on a mac
+function vagrantupdate() {
+  if [ $(uname -s) == "Darwin" ]; then
+    if [ ! $(which vagrant) ]; then
+      vagrantsetup
+    else
+      VAGRANTINSTALLED=$(vagrant version | sed -n 's/^Installed Version: \([0-9\.]*\)/\1/pg') 
+      VAGRANTLATEST=$(vagrant version | sed -n 's/^Latest Version: \([0-9\.]*\)/\1/pg') 
+      if [ $VAGRANTINSTALLED != $VAGRANTLATEST ]; then
+        vagrantsetup
+      else
+        echo "Latest vagrant is already installed"
+      fi
+    fi
   else
     echo "this command only works on macOS."
   fi
