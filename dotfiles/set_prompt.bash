@@ -71,6 +71,32 @@ function terminusupdate() {
   fi
 }
 
+# setup drushupdate if it exists
+function drushupdate() {
+  echo "detecting existing drush version"
+  if [ $(which drush) ]; then 
+    DRUSHLOCAL=$(which drush)
+    DRUSHVERSIONLOCAL=$(drush --version | sed -n 's/.*:[[:space:]]*\([0-9]*.*\)$/\1/gp')
+    echo "found version $DRUSHVERSIONLOCAL at $DRUSHLOCAL"
+  else
+    DRUSHLOCAL="/usr/local/bin/drush"
+    DRUSHVERSIONLOCAL="0.0"
+    echo "no drush found, installing latest version"
+  fi
+  DRUSHPROJECTURL="https://github.com/drush-ops/drush/releases"
+  DRUSHSITEURL=$(curl -s $DRUSHPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/drush[^"]*\)".*/https:\/\/github.com\1/gp' | head -n 1)
+  DRUSHVERSIONSITE=$(echo $DRUSHSITEURL | sed -n 's/.*download\/\([^/]*\)\/.*/\1/gp')
+  if [ $DRUSHVERSIONLOCAL != $DRUSHVERSIONSITE ]; then
+    echo "Installed version: $DRUSHVERSIONLOCAL"
+    echo "Available version: $DRUSHVERSIONSITE"
+    echo "Downloading new version."
+    sudo curl -s $DRUSHSITEURL -Lo $DRUSHLOCAL
+    sudo chmod +x $DRUSHLOCAL
+  else
+    echo "Latest version of Drush is already installed."
+  fi
+}
+
 # update this file
 function updatepromptfile() {
   PROMPTFILE="/usr/local/bin/set_prompt.bash"
