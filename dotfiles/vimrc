@@ -18,7 +18,7 @@ set scrolloff=1
 " syntax, highlighting and spelling ---------------------------------------
 set hlsearch                                     "highlights search results
 set background=light
-"set spell
+set spell
 " multiple windows --------------------------------------------------------
 set hidden                               "allow to bg unsaved buffers, etc.
 set laststatus=2                                   "always show status line
