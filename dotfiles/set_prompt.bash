@@ -1,7 +1,8 @@
 #!/bin/bash
-HISTTIMEFORMAT="%Y-%m-%d %T "
-HISTSIZE=""
-HISTCONTROL=ignorespace
+export HISTTIMEFORMAT="%Y-%m-%d %T "
+export HISTSIZE=""
+export HISTCONTROL=ignoreboth
+export HISTIGNORE="history:clear"
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
