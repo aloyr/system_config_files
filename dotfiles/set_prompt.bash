@@ -201,6 +201,46 @@ function vagrantupdate() {
   fi
 }
 
+# setup node alias if on a mac
+function nodesetup() {
+  if [ $(uname -s) == "Darwin" ]; then
+    echo "downloading latest node"
+    echo "enter your password when/if prompted"
+    NODEURL=$(curl -s https://nodejs.org/en/download/ | sed -ne 's/.*a href="\([^"]*.pkg\)".*/\1/gp' | head -n 1)
+    NODEFILE="$HOME/Downloads/$(echo $NODEURL | sed 's/.*\/\([^/]*\)$/\1/g')"
+    NODEVERSION=$(echo $NODEFILE | sed 's/.*node-\(.*\).pkg/\1/g')
+    curl -s $NODEURL -o $NODEFILE || exit $(echo $?)
+    echo "installing node"
+    sudo installer -pkg $NODEFILE -target /
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
+# set node auto update alias if on a mac
+function nodeupdate() {
+  if [ $(uname -s) == "Darwin" ]; then
+    if [ ! $(which node) ]; then
+      nodesetup
+    else
+      NODEURL=$(curl -s https://nodejs.org/en/download/ | sed -ne 's/.*a href="\([^"]*.pkg\)".*/\1/gp' | head -n 1)
+      NODEFILE="$HOME/Downloads/$(echo $NODEURL | sed 's/.*\/\([^/]*\)$/\1/g')"
+      NODEVERSION=$(echo $NODEFILE | sed 's/.*node-\(.*\).pkg/\1/g')
+      NODEINSTALLED=$(node -v) 
+      NODELATEST=$NODEVERSION
+      if [ $NODEINSTALLED != $NODELATEST ]; then
+        echo "found node $(node -v)"
+        echo "latest node $NODEVERSION"
+        nodesetup
+      else
+        echo "Latest node $NODEVERSION is already installed"
+      fi
+    fi
+  else
+    echo "this command only works on macOS."
+  fi
+}
+
 # only setup composer alias if needed
 if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
   alias composer='php /usr/local/bin/composer.phar'
