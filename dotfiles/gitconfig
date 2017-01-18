@@ -107,7 +107,6 @@
   ; list drush features that need to be reverted
   dr0 = "!echo 'changed features since '$(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))' listed below:'; git diff $(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))..origin/master --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
   fr = "!echo 'changed features in the current branch (based on origin/master):'; git diff $(git merge-base HEAD origin/master)..HEAD --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
-  fr1 = "!echo 'changed features in the current branch (based on rs-prod1):'; git diff $(ssh rs-prod1 cat /www/sites/hidglobal.com/current/REVISION)..HEAD --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
 
   ; get the last hook_update_n on origin/master
   hun = "!git ls-tree -r origin/master -- $(git rev-parse --show-toplevel)/hid/sites/all/modules/custom/hid_deployment/hid_deployment.install.d  | tail -n 1 | awk '{print $4}' | sed 's/.*\\///g'"
