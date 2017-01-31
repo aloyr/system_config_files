@@ -1,3 +1,5 @@
+set fileencodings=utf-8
+set encoding=utf-8
 " pathogen - must come first ----------------------------------------------
 call pathogen#infect()
 call pathogen#helptags()
