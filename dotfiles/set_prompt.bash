@@ -100,6 +100,33 @@ function drushupdate() {
   fi
 }
 
+# setup drupalupdate if it exists
+function drupalupdate() {
+  echo "detecting existing drupal console version"
+  if [ $(which drupal) ]; then 
+    DRUPALLOCAL=$(which drupal)
+    DRUPALVERSIONLOCAL=$(drupal --version | sed -n 's/.*version \([0-9.-]*.*\)$/\1/gp')
+    echo "found version $DRUPALVERSIONLOCAL at $DRUPALLOCAL"
+  else
+    DRUPALLOCAL="/usr/local/bin/drupal"
+    DRUPALVERSIONLOCAL="0.0"
+    echo "no drupal console found, installing latest version"
+  fi
+  DRUPALPROJECTURL="https://github.com/hechoendrupal/drupal-console/releases"
+  DRUPALSITEURL=$(curl -s $DRUPALPROJECTURL | sed -n 's/.*href="\(.*releases\/tag\/[0-9.]*[^"]*\)".*/https:\/\/github.com\1/gp' | head -n 1)
+  DRUPALINSTALLERURL="https://drupalconsole.com/installer"
+  DRUSHVERSIONSITE=$(echo $DRUPALSITEURL | sed -n 's/.*tag\/\([^/]*\)/\1/gp')
+  if [ $DRUPALVERSIONLOCAL != $DRUPALVERSIONSITE ]; then
+    echo "Installed version: $DRUPALVERSIONLOCAL"
+    echo "Available version: $DRUPALVERSIONSITE"
+    echo "Downloading new version."
+    sudo curl -s $DRUPALINSTALLERURL -Lo $DRUPALLOCAL
+    sudo chmod +x $DRUPALLOCAL
+  else
+    echo "Latest version of Drupal Console is already installed."
+  fi
+}
+
 # update this file
 function updatepromptfile() {
   PROMPTFILE="/usr/local/bin/set_prompt.bash"
