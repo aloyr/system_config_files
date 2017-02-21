@@ -115,8 +115,8 @@ function drupalupdate() {
   DRUPALPROJECTURL="https://github.com/hechoendrupal/drupal-console/releases"
   DRUPALSITEURL=$(curl -s $DRUPALPROJECTURL | sed -n 's/.*href="\(.*releases\/tag\/[0-9.]*[^"]*\)".*/https:\/\/github.com\1/gp' | head -n 1)
   DRUPALINSTALLERURL="https://drupalconsole.com/installer"
-  DRUSHVERSIONSITE=$(echo $DRUPALSITEURL | sed -n 's/.*tag\/\([^/]*\)/\1/gp')
-  if [ $DRUPALVERSIONLOCAL != $DRUPALVERSIONSITE ]; then
+  DRUPALVERSIONSITE=$(echo $DRUPALSITEURL | sed -n 's/.*tag\/\([^/]*\)/\1/gp')
+  if [ "$DRUPALVERSIONLOCAL" != "$DRUPALVERSIONSITE" ]; then
     echo "Installed version: $DRUPALVERSIONLOCAL"
     echo "Available version: $DRUPALVERSIONSITE"
     echo "Downloading new version."
