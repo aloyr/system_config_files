@@ -25,9 +25,9 @@ alias dignsa='dig +noall +short +answer'
 alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
 # Conditional aliases
-if [ -d /Applications/Dash.app ]; then
-  alias dash='open dash://'
-fi
+function dash() {
+  dash "open dash://$@"
+}
 
 export LANG="en_US.UTF-8"
 
