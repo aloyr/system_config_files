@@ -27,7 +27,7 @@ alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzi
 # Conditional functions
 if [ -d "/Applications/Dash.app" ]; then
   function dash() {
-    dash "open dash://$@"
+    open  "dash://$@"
   }
 fi
 
