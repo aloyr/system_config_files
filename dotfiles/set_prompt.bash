@@ -44,8 +44,8 @@ if [ -d ~/.composer/vendor/bin ]; then
   export PATH="$HOME/.composer/vendor/bin:$PATH"
 fi
 
-if [ -d ~/.yarn/vendor/bin ]; then
-  export PATH="$HOME/.yarn/vendor/bin:$PATH"
+if [ -d ~/.yarn/bin ]; then
+  export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
 if [ -d ~/Library/Android/sdk/platform-tools ]; then
