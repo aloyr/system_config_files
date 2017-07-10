@@ -1,62 +1,65 @@
 [user]
-	name = username
-	email = username@example.com
+  name = username
+  email = username@example.com
 [core]
-	excludesfile = /Users/user/.gitignore_global
-	autocrlf = false
-	safecrlf = true
-	quotepath = false
+  excludesfile = /Users/user/.gitignore_global
+  autocrlf = false
+  safecrlf = true
+  quotepath = false
   preloadindex = true
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path = 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
 [color]
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  diff = auto
   ui = auto
 [push]
-	default = tracking
+  default = tracking
 [rerere]
   enable = true
 [alias]
   ; convenience aliases
-	br = branch -avv
-	bra = branch -a
+  br = branch -avv
+  bra = branch -a
   brs = branch -av
   brr = "!for i in `git ls-remote -h origin | awk 'BEGIN {FS=\"/\"} $0 ~ /heads/ {print \"origin/\" $3}'`; do git log --format='%at %ad - '`echo $i`' - %aN' -n 1 $i; done|sort -r;"
   brn = "!for i in `git ls-remote -h origin | awk 'BEGIN {FS=\"/\"} $0 ~ /heads/ {print \"origin/\" $3}'`; do git log --format='%at %ad - '`echo $i`' - %aN' -n 1 $i; done | awk '{if (length($4) == 1) {$4 = \"0\" $4;}; print $0;}'" | sed 's/\\(.*\\) - \\([^-]*\\)$/\\2 - \\1/g' | sort
   cp = cherry-pick
-	ci = commit
-	cl = clone
+  ci = commit
+  cl = clone
   clog = "!git lg1s $(git tag -l vC* |tail -n 1)..origin/master"
-	co = checkout
+  co = checkout
   dc = diff --cached
-	ft = fetch --all -p
-	ftt = fetch --all -p -t
-	st = status -s
+  ft = fetch --all -p
+  ftt = fetch --all -p -t
+  st = status -s
   root = rev-parse --show-toplevel
 
   ; log aliases
-	lg = log --pretty --oneline --graph
-	lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg1d = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-	lg1s = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
-	lg1sa = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ad)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
-	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)' --all
-	lg2s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)'
-	lg2d = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-	lg2ds = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
-	lg3 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg = log --pretty --oneline --graph
+  lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg1d = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg1s = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  lg1sa = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ad)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)' --all
+  lg2s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)'
+  lg2d = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg2ds = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+  lg3 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg4 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ]%Creset' --abbrev-commit --date=relative
   lg0 = "! git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'  --tags --branches=ref/remotes/origin/master `git tag|tail -n 1`^..refs/heads/master 2> /dev/null"
 
 ; gitignore from https://www.gitignore.io/docs
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
+
+  ; files that changed in branch
+  fc = diff $(git merge-base origin/master..$@)..$@ --name-status
 
 ; stuff from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   ; log
@@ -112,17 +115,18 @@
   hun = "!git ls-tree -r origin/master -- $(git rev-parse --show-toplevel)/hid/sites/all/modules/custom/hid_deployment/hid_deployment.install.d  | tail -n 1 | awk '{print $4}' | sed 's/.*\\///g'"
 
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+  required = true
+  clean = git-media-clean %f
+  smudge = git-media-smudge %f
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
 [gpg]
-	program = gpg
+  program = gpg
 [filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
 [diff]
-	renameLimit = 3000
+  renameLimit = 3000
