@@ -59,7 +59,7 @@
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 
   ; files that changed in branch
-  fc = diff $(git merge-base origin/master..$@)..$@ --name-status
+  fc = "!git diff $(git merge-base origin/master $@)..$@ --name-status"
 
 ; stuff from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   ; log
