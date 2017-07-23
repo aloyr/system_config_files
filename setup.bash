@@ -79,7 +79,7 @@ if [ $(port echo installed | grep ^libxml2 | wc -l) -ne 1 ]; then
   port install libxml2
 fi
 
-pip install -U requests pyquery
+pip install -U requests pyquery fabric
 
 if [ ! -f config ] && [ ${#GITEMAIL} -lt 5 ] && ! grep "@" <<<$GITEMAIL; then
   echo ""
