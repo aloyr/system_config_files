@@ -14,6 +14,7 @@ set smartcase                                          "if caps, watch case
 set ignorecase                               "if all lowercase, ignore case 
 " tags --------------------------------------------------------------------
 " displaying text ---------------------------------------------------------
+set number
 set relativenumber 
 set linebreak                                          "wraps between words
 set scrolloff=1 
@@ -44,7 +45,7 @@ set softtabstop=2
 set tabstop=2
 set shiftround                    "round > and < to multiples of shiftwidth
 set list
-set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<
+set listchars=eol:¬,tab:▶·,trail:█,extends:▶,precedes:◀"
 set cursorline
 " folding -----------------------------------------------------------------
 set foldmethod=marker
@@ -92,7 +93,7 @@ syntax on
 let mapleader=","
 " mappings ----------------------------------------------------------------
 map <silent> <c-n> :NERDTreeFocus<cr>
-inoremap jj 
+inoremap jjj 
 nnoremap \ ,
 nnoremap <leader>ev :tabe $MYVIMRC<cr>
 nnoremap <leader>sv :so $MYVIMRC<cr>
