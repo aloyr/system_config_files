@@ -78,6 +78,7 @@
   dr  = "!f() { git diff "$1"^.."$1"; }; f"
   lc  = "!f() { git ll "$1"^.."$1"; }; f"
   diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+  ldb = "!f() { git log --pretty --oneline --graph $(git merge-base HEAD $@)..HEAD;}; f"
   ; find files and content inside files
   f = "!git ls-files | grep -i"
   grep = grep -Ii
