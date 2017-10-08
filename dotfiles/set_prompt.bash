@@ -2,7 +2,7 @@
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export HISTSIZE=""
 export HISTCONTROL=ignoreboth
-export HISTIGNORE="history:clear"
+export HISTIGNORE="history:clear:ls:ll"
 shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
@@ -25,6 +25,7 @@ alias dignsa='dig +noall +short +answer'
 alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
 # Conditional functions
+## Add dash app support to bash
 if [ -d "/Applications/Dash.app" ]; then
   function dash() {
     open  "dash://$@"
@@ -34,24 +35,28 @@ fi
 export LANG="en_US.UTF-8"
 
 # PATH settings
-# setup php version if MAMPPro is found
+# setup php version if MAMPPro is present
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
   PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
   export PATH=/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH
 fi
 
+# Add composer bin to path if present
 if [ -d ~/.composer/vendor/bin ]; then
   export PATH="$HOME/.composer/vendor/bin:$PATH"
 fi
 
+# Add yarn bin folder to path if present
 if [ -d ~/.yarn/bin ]; then
   export PATH="$HOME/.yarn/bin:$PATH"
 fi
 
+# Add android lib to path if present
 if [ -d ~/Library/Android/sdk/platform-tools ]; then
   export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
 fi
 
+# Add android lib to path if present
 if [ -d ~/Library/Android/sdk/tools ]; then
   export PATH="$HOME/Library/Android/sdk/tools:$PATH"
 fi
