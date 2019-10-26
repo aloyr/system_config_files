@@ -64,7 +64,7 @@ function install() {
 echo "about to check for MacPorts..."
 if [ $(port help &> /dev/null; echo $?) -ne 0 ]; then
   echo "need to install..."
-  portURL=$(curl https://www.macports.org/install.php | grep 'downloads.sourceforge.net/project/macports/MacPorts' | grep $(sw_vers -productVersion) | sed 's/.*href="\([^"]*\)".*/\1/g' | uniq)
+  portURL=$(curl -s https://www.macports.org/install.php | grep 'distfiles.macports.org/MacPorts' | grep $(sw_vers -productVersion) | sed 's/.*href="\([^"]*\)".*/\1/g' | uniq)
   portPKG=~/Downloads/$(echo $portURL | sed 's/.*\/\([^/]*\)$/\1/g')
   curl -o $portPKG $portURL
   if [ $(file $portPKG | grep HTML &> /dev/null; echo $?) -eq 0 ]; then
