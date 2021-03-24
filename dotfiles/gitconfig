@@ -1,8 +1,10 @@
 [user]
-  name = username
-  email = username@example.com
+  name = Peter Carrero
+  email = peter.carrero@gmail.com
+  signingkey = 6655C6F77D826B1E77C020A2B3139875FF44D046
+[gui]
 [core]
-  excludesfile = /Users/user/.gitignore_global
+  excludesfile = /Users/peter/.gitignore_global
   autocrlf = false
   safecrlf = true
   quotepath = false
@@ -11,7 +13,7 @@
   cmd = opendiff \"$LOCAL\" \"$REMOTE\"
   path = 
 [mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
   trustExitCode = true
 [color]
   status = auto
@@ -28,18 +30,24 @@
   br = branch -avv
   bra = branch -a
   brs = branch -av
-  brr = "!for i in `git ls-remote -h origin | awk 'BEGIN {FS=\"/\"} $0 ~ /heads/ {print \"origin/\" $3}'`; do git log --format='%at %ad - '`echo $i`' - %aN' -n 1 $i; done|sort -r;"
-  brn = "!for i in `git ls-remote -h origin | awk 'BEGIN {FS=\"/\"} $0 ~ /heads/ {print \"origin/\" $3}'`; do git log --format='%at %ad - '`echo $i`' - %aN' -n 1 $i; done | awk '{if (length($4) == 1) {$4 = \"0\" $4;}; print $0;}'" | sed 's/\\(.*\\) - \\([^-]*\\)$/\\2 - \\1/g' | sort
+  brr = "!for i in $(git ls-remote -h origin | sed 's#.*refs/heads#origin#g'); do git log --format='%at %ad - '$i' - %aN' -n 1 $i; done | sort -r | awk '{if (length($4) == 1) {$4 = \"0\" $4;}; print $0;}'"
+  brn = "!for i in $(git ls-remote -h origin | sed 's#.*refs/heads#origin#g'); do git log --format='%at %ad - '$i' - %aN' -n 1 $i; done | awk '{if (length($4) == 1) {$4 = \"0\" $4;}; print $0;}'" | sed 's/\\(.*\\) - \\([^-]*\\)$/\\2 - \\1/g' | sort
   cp = cherry-pick
   ci = commit
   cl = clone
   clog = "!git lg1s $(git tag -l vC* |tail -n 1)..origin/master"
+  ch = "!git lg1s $(git merge-base HEAD origin/master)..HEAD"
+  ch1 = "!git log --format=%s $(git merge-base HEAD origin/master)..HEAD"
+  sh = "!git show $(git merge-base HEAD origin/master)..HEAD"
+  sh1 = "!git show $(git merge-base HEAD origin/master)..HEAD"
   co = checkout
   dc = diff --cached
-  ft = fetch --all -p
+  ft = fetch --all -p -t
   ftt = fetch --all -p -t
   st = status -s
   root = rev-parse --show-toplevel
+  dev = "!git diff $(git merge-base $1 origin/master)..$1"
+  dev1 = "!branch=$(if [ $# -gt 0 ]; then echo $1; else  echo $(git branch | awk '{if (NF == 2) {print $2}}'); fi); git diff $(git merge-base $branch origin/master)..$branch"
 
   ; log aliases
   lg = log --pretty --oneline --graph
@@ -53,7 +61,7 @@
   lg2ds = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
   lg3 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg4 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ]%Creset' --abbrev-commit --date=relative
-  lg0 = "! git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'  --tags --branches=ref/remotes/origin/master `git tag|tail -n 1`^..refs/heads/master 2> /dev/null"
+  lg0 = "!git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches=origin/master `git show-ref --tags | tail -n 1 | cut -d' '  -f1`^..origin/master 2> /dev/null"
 
 ; gitignore from https://www.gitignore.io/docs
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
@@ -105,6 +113,11 @@
   sl = stash list
   sa = stash apply
   ss = stash save
+  test = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
+
+  ;; HUB aliases
+  pull-request = "!hub pull-request"
+  pr = "!hub pull-request"
 
   ;; HID Aliases
 
@@ -117,8 +130,8 @@
 
 [filter "media"]
   required = true
-  clean = git-media-clean %f
-  smudge = git-media-smudge %f
+  clean = git media clean %f
+  smudge = git media smudge %f
 [filter "hawser"]
   clean = git hawser clean %f
   smudge = git hawser smudge %f
@@ -126,8 +139,15 @@
 [gpg]
   program = gpg
 [filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
   required = true
+  process = git-lfs filter-process
 [diff]
   renameLimit = 3000
+  ignoreSubmodules = dirty
+;[commit]
+;  gpgsign = true
+; template = /Users/user/.stCommitMsg
+[init]
+  defaultBranch = main
