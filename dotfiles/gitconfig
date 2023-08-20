@@ -1,12 +1,16 @@
 [user]
   name = Peter Carrero
   email = peter.carrero@gmail.com
-  signingkey = 6655C6F77D826B1E77C020A2B3139875FF44D046
+  signingkey = D92C8422F0B9059E
+  #signingkey = 6655C6F77D826B1E77C020A2B3139875FF44D046
+[commit]
+  gpgSign = true
 [gui]
 [core]
   excludesfile = /Users/peter/.gitignore_global
   autocrlf = false
-  safecrlf = true
+  #safecrlf = true
+  safecrlf = false
   quotepath = false
   preloadindex = true
 [difftool "sourcetree"]
@@ -139,10 +143,10 @@
 [gpg]
   program = gpg
 [filter "lfs"]
+  process = git-lfs filter-process
+  required = true
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
-  required = true
-  process = git-lfs filter-process
 [diff]
   renameLimit = 3000
   ignoreSubmodules = dirty
