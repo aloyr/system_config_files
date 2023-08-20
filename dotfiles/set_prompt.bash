@@ -1,10 +1,10 @@
 #!/bin/bash
+export BASH_SILENCE_DEPRECATION_WARNING=1
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export HISTSIZE=""
 export HISTCONTROL=ignoreboth
 export HISTIGNORE="history:clear:ls:ll"
 shopt -s histappend
-PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
 [[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
 [[ $(which busybox 2> /dev/null) ]] && color=""
@@ -38,12 +38,20 @@ export LANG="en_US.UTF-8"
 # setup php version if MAMPPro is present
 if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
   PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
-  export PATH=/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH
+  export PATH="/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH"
 fi
 
 # Add composer bin to path if present
 if [ -d ~/.composer/vendor/bin ]; then
   export PATH="$HOME/.composer/vendor/bin:$PATH"
+fi
+
+# Add symfony bin to path if present
+if [ -d ~/.symfony5/bin ]; then
+  export PATH="$HOME/.symfony5/bin:$PATH"
+fi
+if [ -d ~/.symfony/bin ]; then
+  export PATH="$HOME/.symfony/bin:$PATH"
 fi
 
 # Add yarn bin folder to path if present
@@ -63,6 +71,20 @@ fi
 
 #alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
 #alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
+
+#setup ansible helper functions
+linode() {
+  echo $@
+  ansible -i ~/workspace/hid/devops/ansible/dev/inventory linode -m shell -a "$@"
+}
+servers() {
+  ansible -i ~/workspace/hid/devops/ansible/dev/inventory servers -m shell -a "$1"
+}
+ansible_shell() {
+  group=$1
+  shift
+  ansible -i ~/workspace/hid/devops/ansible/dev/inventory $group -m shell -a "$@"
+}
 
 # setup terminusupdate if it exists
 function terminusupdate() {
@@ -433,6 +455,9 @@ fi
 runThis '/usr/local/bin/git-completion.bash'
 # from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
 runThis '/usr/local/bin/git-prompt.sh'
+# from https://trac.macports.org/wiki/howto/bash-completion
+. /opt/local/etc/bash_completion
+
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=true
@@ -448,3 +473,5 @@ if [ $USUARIO -eq 0 ]; then
 else
   PS1="$RESET# \$(errCode) $GREEN_BOLD\u@\h$BLUE_BOLD($TTYNAME) \w $MAGENTA_NORMAL\$(__git_ps1 '(%s)')$RESET\n"
 fi
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
