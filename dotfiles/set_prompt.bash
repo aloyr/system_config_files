@@ -5,6 +5,8 @@ export HISTSIZE=""
 export HISTCONTROL=ignoreboth
 export HISTIGNORE="history:clear:ls:ll"
 shopt -s histappend
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
+
 # some more ls aliases
 [[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
 [[ $(which busybox 2> /dev/null) ]] && color=""
@@ -13,8 +15,6 @@ alias la="ls -A$color"
 alias l="ls -CF$color"
 
 # other convenience aliases
-alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
-alias speedtest100='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test100.zip'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/activate'
@@ -22,7 +22,6 @@ alias tmux='TERM=xterm-256color tmux'
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
 alias dignsa='dig +noall +short +answer'
-alias packtrename='ls 978*epub | while read book; do echo $book; metafile=$(unzip -l "$book" | grep -Eo '\''.*opf$'\'' | awk '\''{print $4}'\''); title=$(zipgrep '\''<dc:title'\'' "$book" $metafile | sed '\''s/.*>\(.*\)<.*/\1/g'\''); if [ -f "$title.epub" ]; then title=${title}_$(date +%s); fi; title="${title}.epub"; echo "moving to $title"; mv "$book" "$title"; echo "";  done'
 
 # Conditional functions
 ## Add dash app support to bash
@@ -68,102 +67,6 @@ fi
 if [ -d ~/Library/Android/sdk/tools ]; then
   export PATH="$HOME/Library/Android/sdk/tools:$PATH"
 fi
-
-#alias proxmoxlist='ssh itsbl006890i.olatheks.org pveca -l|awk '\''{print $3}'\''|grep -v CID|xargs -n 1 -i ssh {} vzlist -a -o ctid,numproc,status,ip,hostname,description | grep -v CTID|sort'
-#alias opus-update='for i in training staging beta; do git checkout $i; git merge master; git push; done; git checkout master'
-
-#setup ansible helper functions
-linode() {
-  echo $@
-  ansible -i ~/workspace/hid/devops/ansible/dev/inventory linode -m shell -a "$@"
-}
-servers() {
-  ansible -i ~/workspace/hid/devops/ansible/dev/inventory servers -m shell -a "$1"
-}
-ansible_shell() {
-  group=$1
-  shift
-  ansible -i ~/workspace/hid/devops/ansible/dev/inventory $group -m shell -a "$@"
-}
-
-# setup terminusupdate if it exists
-function terminusupdate() {
-  echo "detecting existing terminus version"
-  if [ $(which terminus) ]; then 
-    TERMINUSLOCAL=$(which terminus)
-    TERMINUSVERSIONLOCAL=$(terminus cli info | sed -n 's/.*Terminus version[^0-9]*\([0-9\.]*\)[^0-9]*/\1/gp')
-    echo "found version $TERMINUSVERSIONLOCAL at $TERMINUSLOCAL"
-  else
-    TERMINUSLOCAL="/usr/local/bin/terminus"
-    TERMINUSVERSIONLOCAL="0.0"
-    echo "no terminus found, installing latest version"
-  fi
-  TERMINUSPROJECTURL="https://github.com/pantheon-systems/terminus/releases/"
-  TERMINUSSITEURL=$(curl -s $TERMINUSPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/terminus\)".*/https:\/\/github.com\1/gp' | head -n 1)
-  TERMINUSVERSIONSITE=$(echo $TERMINUSSITEURL | sed -n 's/.*\/\([0-9][0-9\.]*\)\/[^0-9\.]*/\1/p')
-  if [ $TERMINUSVERSIONLOCAL != $TERMINUSVERSIONSITE ]; then
-    echo "Installed version: $TERMINUSVERSIONLOCAL"
-    echo "Available version: $TERMINUSVERSIONSITE"
-    echo "Downloading new version."
-    sudo curl -s $TERMINUSSITEURL -Lo $TERMINUSLOCAL
-    sudo chmod +x $TERMINUSLOCAL
-  else
-    echo "Latest version of Terminus is already installed."
-  fi
-}
-
-# setup drushupdate if it exists
-function drushupdate() {
-  echo "detecting existing drush version"
-  if [ $(which drush) ]; then 
-    DRUSHLOCAL=$(which drush)
-    DRUSHVERSIONLOCAL=$(drush --version | sed -n 's/.*:[[:space:]]*\([0-9]*.*\)$/\1/gp')
-    echo "found version $DRUSHVERSIONLOCAL at $DRUSHLOCAL"
-  else
-    DRUSHLOCAL="/usr/local/bin/drush"
-    DRUSHVERSIONLOCAL="0.0"
-    echo "no drush found, installing latest version"
-  fi
-  DRUSHPROJECTURL="https://github.com/drush-ops/drush/releases"
-  DRUSHSITEURL=$(curl -s $DRUSHPROJECTURL | sed -n 's/.*href="\(.*releases\/download\/[0-9.]*\/drush[^"]*\)".*/https:\/\/github.com\1/gp' | head -n 1)
-  DRUSHVERSIONSITE=$(echo $DRUSHSITEURL | sed -n 's/.*download\/\([^/]*\)\/.*/\1/gp')
-  if [ $DRUSHVERSIONLOCAL != $DRUSHVERSIONSITE ]; then
-    echo "Installed version: $DRUSHVERSIONLOCAL"
-    echo "Available version: $DRUSHVERSIONSITE"
-    echo "Downloading new version."
-    sudo curl -s $DRUSHSITEURL -Lo $DRUSHLOCAL
-    sudo chmod +x $DRUSHLOCAL
-  else
-    echo "Latest version of Drush is already installed."
-  fi
-}
-
-# setup drupalupdate if it exists
-function drupalupdate() {
-  echo "detecting existing drupal console version"
-  if [ $(which drupal) ]; then 
-    DRUPALLOCAL=$(which drupal)
-    DRUPALVERSIONLOCAL=$(drupal --version | sed -n 's/.*version \([0-9.-]*.*\)$/\1/gp')
-    echo "found version $DRUPALVERSIONLOCAL at $DRUPALLOCAL"
-  else
-    DRUPALLOCAL="/usr/local/bin/drupal"
-    DRUPALVERSIONLOCAL="0.0"
-    echo "no drupal console found, installing latest version"
-  fi
-  DRUPALPROJECTURL="https://github.com/hechoendrupal/drupal-console/releases"
-  DRUPALSITEURL=$(curl -s $DRUPALPROJECTURL | sed -n 's/.*href="\(.*releases\/tag\/[0-9.]*[^"]*\)".*/https:\/\/github.com\1/gp' | head -n 1)
-  DRUPALINSTALLERURL="https://drupalconsole.com/installer"
-  DRUPALVERSIONSITE=$(echo $DRUPALSITEURL | sed -n 's/.*tag\/\([^/]*\)/\1/gp')
-  if [ "$DRUPALVERSIONLOCAL" != "$DRUPALVERSIONSITE" ]; then
-    echo "Installed version: $DRUPALVERSIONLOCAL"
-    echo "Available version: $DRUPALVERSIONSITE"
-    echo "Downloading new version."
-    sudo curl -s $DRUPALINSTALLERURL -Lo $DRUPALLOCAL
-    sudo chmod +x $DRUPALLOCAL
-  else
-    echo "Latest version of Drupal Console is already installed."
-  fi
-}
 
 # update this file
 function updatepromptfile() {
@@ -229,80 +132,6 @@ function portupdate() {
         sudo port $action leaves
       done
     done
-  else
-    echo "this command only works on macOS."
-  fi
-}
-
-# setup vagrant alias if on a mac
-function vagrantsetup() {
-  if [ $(uname -s) == "Darwin" ]; then
-    echo "installing vagrant"
-    echo "enter your password when/if prompted"
-    VAGRANTURL=$(curl -s https://www.vagrantup.com/downloads.html | sed -n 's/.*a href="\([^"]*\.dmg\)".*/\1/pg')
-    curl -s $VAGRANTURL -o ~/Downloads/vagrant.dmg || exit $(echo $?)
-    VOLUME=$(hdiutil mount ~/Downloads/vagrant.dmg | sed -n 's/.*\(\/Volumes.*\)/\1/pg')
-    sudo installer -pkg /Volumes/Vagrant/Vagrant.pkg -target /
-    hdiutil unmount $VOLUME
-  else
-    echo "this command only works on macOS."
-  fi
-}
-
-# set vagrant auto update alias if on a mac
-function vagrantupdate() {
-  if [ $(uname -s) == "Darwin" ]; then
-    if [ ! $(which vagrant) ]; then
-      vagrantsetup
-    else
-      VAGRANTINSTALLED=$(vagrant version | sed -n 's/^Installed Version: \([0-9\.]*\)/\1/pg') 
-      VAGRANTLATEST=$(vagrant version | sed -n 's/^Latest Version: \([0-9\.]*\)/\1/pg') 
-      if [ $VAGRANTINSTALLED != $VAGRANTLATEST ]; then
-        vagrantsetup
-      else
-        echo "Latest vagrant is already installed"
-      fi
-    fi
-  else
-    echo "this command only works on macOS."
-  fi
-}
-
-# setup node alias if on a mac
-function nodesetup() {
-  if [ $(uname -s) == "Darwin" ]; then
-    echo "downloading latest node"
-    echo "enter your password when/if prompted"
-    NODEURL=$(curl -s https://nodejs.org/en/download/ | sed -ne 's/.*a href="\([^"]*.pkg\)".*/\1/gp' | head -n 1)
-    NODEFILE="$HOME/Downloads/$(echo $NODEURL | sed 's/.*\/\([^/]*\)$/\1/g')"
-    NODEVERSION=$(echo $NODEFILE | sed 's/.*node-\(.*\).pkg/\1/g')
-    curl -s $NODEURL -o $NODEFILE || exit $(echo $?)
-    echo "installing node"
-    sudo installer -pkg $NODEFILE -target /
-  else
-    echo "this command only works on macOS."
-  fi
-}
-
-# set node auto update alias if on a mac
-function nodeupdate() {
-  if [ $(uname -s) == "Darwin" ]; then
-    if [ ! $(which node) ]; then
-      nodesetup
-    else
-      NODEURL=$(curl -s https://nodejs.org/en/download/ | sed -ne 's/.*a href="\([^"]*.pkg\)".*/\1/gp' | head -n 1)
-      NODEFILE="$HOME/Downloads/$(echo $NODEURL | sed 's/.*\/\([^/]*\)$/\1/g')"
-      NODEVERSION=$(echo $NODEFILE | sed 's/.*node-\(.*\).pkg/\1/g')
-      NODEINSTALLED=$(node -v) 
-      NODELATEST=$NODEVERSION
-      if [ $NODEINSTALLED != $NODELATEST ]; then
-        echo "found node $(node -v)"
-        echo "latest node $NODEVERSION"
-        nodesetup
-      else
-        echo "Latest node $NODEVERSION is already installed"
-      fi
-    fi
   else
     echo "this command only works on macOS."
   fi
@@ -456,7 +285,7 @@ runThis '/usr/local/bin/git-completion.bash'
 # from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
 runThis '/usr/local/bin/git-prompt.sh'
 # from https://trac.macports.org/wiki/howto/bash-completion
-. /opt/local/etc/bash_completion
+#. /opt/local/etc/bash_completion
 
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWSTASHSTATE=true
@@ -473,5 +302,4 @@ if [ $USUARIO -eq 0 ]; then
 else
   PS1="$RESET# \$(errCode) $GREEN_BOLD\u@\h$BLUE_BOLD($TTYNAME) \w $MAGENTA_NORMAL\$(__git_ps1 '(%s)')$RESET\n"
 fi
-PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
