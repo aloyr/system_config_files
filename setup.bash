@@ -260,12 +260,8 @@ else
   echo "Skipping python setup"
 fi
 
-for i in DO{Puppet,Ports,Vagrant,VagrantManager,NodeJS,Atext,GeekTool,TotalFinder,TotalTerminal,SQLPro,KindleApp}; do
+for i in DO{Ports}; do
   getHelpers $i
 done
-
-if [ -d ~/.vagrant.d ]; then
-  chown -R $SUDO_USER:staff ~/.vagrant.d
-fi
 
 echo "Done."
