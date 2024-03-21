@@ -1,5 +1,6 @@
 #!/bin/bash
 export BASH_SILENCE_DEPRECATION_WARNING=1
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export HISTSIZE=""
 export HISTCONTROL=ignoreboth
