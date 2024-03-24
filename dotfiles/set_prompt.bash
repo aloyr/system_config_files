@@ -2,6 +2,7 @@
 
 # Setup lang
 export LANG="en_US.UTF-8"
+export EDITOR=vim
 
 # Disable warning on new macs
 export BASH_SILENCE_DEPRECATION_WARNING=1
@@ -34,6 +35,12 @@ alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/a
 alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias tmux='TERM=xterm-256color tmux'
+
+# only setup composer alias if needed
+if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
+  alias composer='php /usr/local/bin/composer.phar'
+fi
+
 
 # Conditional functions
 ## Add dash app support to bash
@@ -84,7 +91,7 @@ function setupxcode() {
     CLUFILE="/tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress"
     touch $CLUFILE
     CLU=$(softwareupdate -l | sed -n 's/.*\*.*\(Command Line.*\)$/\1/gp')
-    if [ ! -z $CLU ]; then
+    if [ ! -z "$CLU" ]; then
       softwareupdate -i "$CLU" -v
     fi
     rm $CLUFILE
@@ -128,13 +135,6 @@ function portupdate() {
     echo "this command only works on macOS."
   fi
 }
-
-# only setup composer alias if needed
-if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
-  alias composer='php /usr/local/bin/composer.phar'
-fi
-
-export EDITOR=vim
 
 # colorful man pages
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
@@ -268,10 +268,6 @@ TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
 
 # prepping environment
-if [ $(which drush &> /dev/null ; echo $?) -eq 0 ]; then
-  # from https://raw.githubusercontent.com/drush-ops/drush/main/drush.complete.sh
-  runThis '/usr/local/bin/drush.complete.sh'
-fi
 # from https://github.com/git/git/raw/main/contrib/completion/git-completion.bash
 runThis '/usr/local/bin/git-completion.bash'
 # from https://github.com/git/git/raw/main/contrib/completion/git-prompt.sh
