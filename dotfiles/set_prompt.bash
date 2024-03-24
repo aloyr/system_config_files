@@ -268,9 +268,9 @@ TTYNAME=`tty|cut -b 6-`
 USUARIO=`id -u`
 
 # prepping environment
-# from https://github.com/git/git/raw/main/contrib/completion/git-completion.bash
+# from https://github.com/git/git/raw/master/contrib/completion/git-completion.bash
 runThis '/usr/local/bin/git-completion.bash'
-# from https://github.com/git/git/raw/main/contrib/completion/git-prompt.sh
+# from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
 runThis '/usr/local/bin/git-prompt.sh'
 # from https://trac.macports.org/wiki/howto/bash-completion
 #. /opt/local/etc/bash_completion
