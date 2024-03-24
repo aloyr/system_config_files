@@ -67,6 +67,7 @@ function updatepromptfile() {
   . $PROMPTFILE
 }
 
+# Helper functions
 # check ssl expiration
 function ssl_check() {
   if [ -z ${1+x} ] ; then
@@ -95,8 +96,8 @@ function setupxcode() {
 # set port version auto-upgrade alias if on a mac
 function portupgrade() {
   if [ $(uname -s) == "Darwin" ]; then
-    OSVERSION=$(sw_vers -productVersion)
-    PKGURL=$(curl -s https://www.macports.org/install.php | sed -n 's/.*"\([^"]*'$OSVERSION'[^"]*\.pkg\)".*/\1/gp' | head -n 1)
+    OSVERSION=$(sw_vers -productVersion | sed 's/\..*//')
+    PKGURL=$(curl -Ls https://www.macports.org/install.php | sed -n 's/.*"\([^"]*'$OSVERSION'[^"]*\.pkg\)".*/\1/gp' | head -n 1)
     if [ ! -z $PKGURL ]; then
       PKGFILE=$(echo $PKGURL | sed 's/.*\/\([^/]*\)$/\1/g')
       PKGNAME="/tmp/$PKGFILE"
