@@ -37,13 +37,7 @@ alias tmux='TERM=xterm-256color tmux'
 
 # Conditional functions
 ## Add dash app support to bash
-if [ -d "/Applications/Dash.app" ]; then
-  function dash() {
-    open  "dash://$@"
-  }
-fi
-
-
+[ -d "/Applications/Dash.app" ] && function dash() { open  "dash://$@" }
 # PATH settings
 # setup php version if MAMPPro is present
 #if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
@@ -51,38 +45,24 @@ fi
 #  export PATH="/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH"
 #fi
 
-# Add composer bin to path if present
-if [ -d ~/.composer/vendor/bin ]; then
-  export PATH="$HOME/.composer/vendor/bin:$PATH"
-fi
-
-# Add symfony bin to path if present
-if [ -d ~/.symfony5/bin ]; then
-  export PATH="$HOME/.symfony5/bin:$PATH"
-fi
-if [ -d ~/.symfony/bin ]; then
-  export PATH="$HOME/.symfony/bin:$PATH"
-fi
-
-# Add yarn bin folder to path if present
-if [ -d ~/.yarn/bin ]; then
-  export PATH="$HOME/.yarn/bin:$PATH"
-fi
-
-# Add android lib to path if present
-if [ -d ~/Library/Android/sdk/platform-tools ]; then
-  export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
-fi
-
-# Add android lib to path if present
-if [ -d ~/Library/Android/sdk/tools ]; then
-  export PATH="$HOME/Library/Android/sdk/tools:$PATH"
-fi
+# Conditional paths
+# composer bin
+[ -d ~/.composer/vendor/bin ] && export PATH="$HOME/.composer/vendor/bin:$PATH"
+# symfony bin
+[ -d ~/.symfony/bin ] && export PATH="$HOME/.symfony/bin:$PATH"
+# symfony5 bin
+[ -d ~/.symfony5/bin ] && export PATH="$HOME/.symfony5/bin:$PATH"
+# yarn bin
+[ -d ~/.yarn/bin ] && export PATH="$HOME/.yarn/bin:$PATH"
+# android lib platform
+[ -d ~/Library/Android/sdk/platform-tools ] && export PATH="$HOME/Library/Android/sdk/platform-tools:$PATH"
+# android lib
+[ -d ~/Library/Android/sdk/tools ] && export PATH="$HOME/Library/Android/sdk/tools:$PATH"
 
 # update this file
 function updatepromptfile() {
   PROMPTFILE="/usr/local/bin/set_prompt.bash"
-  sudo curl -s https://raw.githubusercontent.com/aloyr/system_config_files/master/dotfiles/set_prompt.bash -o $PROMPTFILE
+  sudo curl -s https://raw.githubusercontent.com/aloyr/system_config_files/main/dotfiles/set_prompt.bash -o $PROMPTFILE
   sudo chmod +x $PROMPTFILE
   . $PROMPTFILE
 }
@@ -288,12 +268,12 @@ USUARIO=`id -u`
 
 # prepping environment
 if [ $(which drush &> /dev/null ; echo $?) -eq 0 ]; then
-  # from https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh
+  # from https://raw.githubusercontent.com/drush-ops/drush/main/drush.complete.sh
   runThis '/usr/local/bin/drush.complete.sh'
 fi
-# from https://github.com/git/git/raw/master/contrib/completion/git-completion.bash
+# from https://github.com/git/git/raw/main/contrib/completion/git-completion.bash
 runThis '/usr/local/bin/git-completion.bash'
-# from https://github.com/git/git/raw/master/contrib/completion/git-prompt.sh
+# from https://github.com/git/git/raw/main/contrib/completion/git-prompt.sh
 runThis '/usr/local/bin/git-prompt.sh'
 # from https://trac.macports.org/wiki/howto/bash-completion
 #. /opt/local/etc/bash_completion
