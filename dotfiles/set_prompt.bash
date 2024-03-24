@@ -281,10 +281,6 @@ GIT_PS1_SHOWUNTRACKEDFILES=true
 GIT_PS1_SHOWUPSTREAM="auto verbose"
 GIT_PS1_SHOWCOLORHINTS=true #only available on PROMPT_COMMAND mode
 
-function reset() {
-  echo -ne $RESET
-}
-
 if [ $USUARIO -eq 0 ]; then
   PS1="$RESET# \$(errCode) $RED_BOLD\u@\h$BLUE_BOLD($TTYNAME) \w $MAGENTA_NORMAL\$(__git_ps1 '(%s)')$RESET\n"
 else
