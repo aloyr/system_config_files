@@ -19,8 +19,11 @@ PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 # some more ls aliases
 [[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
 [[ $(which busybox 2> /dev/null) ]] && color=""
+[[ $(which lsd 2> /dev/null) ]] && alias ls="lsd"
 alias ll="ls -l$color"
-alias la="ls -A$color"
+alias la="ls -a$color"
+alias lla="lls -al$color"
+alias lt="ls --tree"
 alias l="ls -CF$color"
 
 # other convenience aliases
