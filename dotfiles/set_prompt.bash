@@ -1,6 +1,14 @@
 #!/bin/bash
+
+# Setup lang
+export LANG="en_US.UTF-8"
+
+# Disable warning on new macs
 export BASH_SILENCE_DEPRECATION_WARNING=1
+# Fix ansible thread issue on apple silicon
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+# History adjustments
 export HISTTIMEFORMAT="%Y-%m-%d %T "
 export HISTSIZE=""
 export HISTCONTROL=ignoreboth
@@ -16,13 +24,13 @@ alias la="ls -A$color"
 alias l="ls -CF$color"
 
 # other convenience aliases
-alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
-alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
-alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/activate'
-alias tmux='TERM=xterm-256color tmux'
+alias dignsa='dig +noall +short +answer'
 alias path='echo $PATH | tr : "\n"'
 alias paths='echo $PATH | tr : "\n" | sort'
-alias dignsa='dig +noall +short +answer'
+alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/activate'
+alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
+alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
+alias tmux='TERM=xterm-256color tmux'
 
 # Conditional functions
 ## Add dash app support to bash
@@ -32,14 +40,13 @@ if [ -d "/Applications/Dash.app" ]; then
   }
 fi
 
-export LANG="en_US.UTF-8"
 
 # PATH settings
 # setup php version if MAMPPro is present
-if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
-  PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
-  export PATH="/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH"
-fi
+#if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
+#  PHPVER=$(/usr/libexec/PlistBuddy -c "print phpVersion" ~/Library/Preferences/de.appsolute.mamppro.plist)
+#  export PATH="/Applications/MAMP/bin/php/php${PHPVER}/bin:$PATH"
+#fi
 
 # Add composer bin to path if present
 if [ -d ~/.composer/vendor/bin ]; then
