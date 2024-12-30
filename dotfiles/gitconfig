@@ -1,7 +1,9 @@
 [user]
   name = Peter Carrero
   email = peter.carrero@gmail.com
-  signingkey = D92C8422F0B9059E
+  signingkey = FF4D48456FAF331935A17E6A8105D0D73A9C1CB6
+  #signingkey = 982F1BDCAA255EF994F87FD5D92C8422F0B9059E
+  #signingkey = D92C8422F0B9059E
   #signingkey = 6655C6F77D826B1E77C020A2B3139875FF44D046
 [commit]
   gpgSign = true
@@ -39,25 +41,26 @@
   cp = cherry-pick
   ci = commit
   cl = clone
-  clog = "!git lg1s $(git tag -l vC* |tail -n 1)..origin/master"
-  ch = "!git lg1s $(git merge-base HEAD origin/master)..HEAD"
-  ch1 = "!git log --format=%s $(git merge-base HEAD origin/master)..HEAD"
-  sh = "!git show $(git merge-base HEAD origin/master)..HEAD"
-  sh1 = "!git show $(git merge-base HEAD origin/master)..HEAD"
+  clog = "!git lg1s $(git tag -l vC* |tail -n 1)..origin/main"
+  ch = "!git lg1s $(git merge-base HEAD origin/main)..HEAD"
+  ch1 = "!git log --format=%s $(git merge-base HEAD origin/main)..HEAD"
+  sh = "!git show $(git merge-base HEAD origin/main)..HEAD"
+  sh1 = "!git show $(git merge-base HEAD origin/main)..HEAD"
   co = checkout
   dc = diff --cached
   ft = fetch --all -p -t
   ftt = fetch --all -p -t
   st = status -s
   root = rev-parse --show-toplevel
-  dev = "!git diff $(git merge-base $1 origin/master)..$1"
-  dev1 = "!branch=$(if [ $# -gt 0 ]; then echo $1; else  echo $(git branch | awk '{if (NF == 2) {print $2}}'); fi); git diff $(git merge-base $branch origin/master)..$branch"
+  dev = "!git diff $(git merge-base $1 origin/main)..$1"
+  dev1 = "!branch=$(if [ $# -gt 0 ]; then echo $1; else  echo $(git branch | awk '{if (NF == 2) {print $2}}'); fi); git diff $(git merge-base $branch origin/main)..$branch"
 
   ; log aliases
   lg = log --pretty --oneline --graph
   lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg1d = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
   lg1s = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+  lg1ds = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
   lg1sa = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ad)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)'
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)' --all
   lg2s = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(black)%s%C(reset) %C(dim black)- %an%C(reset)'
@@ -65,13 +68,13 @@
   lg2ds = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
   lg3 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg4 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ]%Creset' --abbrev-commit --date=relative
-  lg0 = "!git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches=origin/master `git show-ref --tags | tail -n 1 | cut -d' '  -f1`^..origin/master 2> /dev/null"
+  lg0 = "!git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(black)%s%C(reset) %C(dim black)- %an%C(reset)%C(bold yellow)%d%C(reset)' --branches=origin/main `git show-ref --tags | tail -n 1 | cut -d' '  -f1`^..origin/main 2> /dev/null"
 
 ; gitignore from https://www.gitignore.io/docs
   ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"
 
   ; files that changed in branch
-  fc = "!git diff $(git merge-base origin/master $@)..$@ --name-status"
+  fc = "!git diff $(git merge-base origin/main $@)..$@ --name-status"
 
 ; stuff from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
   ; log
@@ -118,19 +121,22 @@
   sa = stash apply
   ss = stash save
   test = "!gi() { curl http://www.gitignore.io/api/$@ ;}; gi"
+  ; submodules
+  su = submodule update --init --recursive
 
   ;; HUB aliases
   pull-request = "!hub pull-request"
   pr = "!hub pull-request"
+  create = "!hub create"
 
   ;; HID Aliases
 
   ; list drush features that need to be reverted
-  dr0 = "!echo 'changed features since '$(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))' listed below:'; git diff $(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))..origin/master --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
-  fr = "!echo 'changed features in the current branch (based on origin/master):'; git diff $(git merge-base HEAD origin/master)..HEAD --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
+  dr0 = "!echo 'changed features since '$(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))' listed below:'; git diff $(git describe $(git rev-list --tags='vC[0-9|\\-]*P[0-9|\\-]*' --max-count=1))..origin/main --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
+  fr = "!echo 'changed features in the current branch (based on origin/main):'; git diff $(git merge-base HEAD origin/main)..HEAD --name-only | gawk '$0 ~ /hid_features/ {print gensub(/.*hid_features\\/([^/]*)\\/.*/, \"\\\\1\", \"g\", $0);}' | uniq | sort"
 
-  ; get the last hook_update_n on origin/master
-  hun = "!git ls-tree -r origin/master -- $(git rev-parse --show-toplevel)/hid/sites/all/modules/custom/hid_deployment/hid_deployment.install.d  | tail -n 1 | awk '{print $4}' | sed 's/.*\\///g'"
+  ; get the last hook_update_n on origin/main
+  hun = "!git ls-tree -r origin/main -- $(git rev-parse --show-toplevel)/hid/sites/all/modules/custom/hid_deployment/hid_deployment.install.d  | tail -n 1 | awk '{print $4}' | sed 's/.*\\///g'"
 
 [filter "media"]
   required = true
@@ -141,7 +147,7 @@
   smudge = git hawser smudge %f
   required = true
 [gpg]
-  program = gpg
+  program = /opt/homebrew/bin/gpg
 [filter "lfs"]
   process = git-lfs filter-process
   required = true
