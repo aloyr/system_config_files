@@ -1,0 +1,13 @@
+keybind = global:ctrl+grave_accent=toggle_quick_terminal
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 18
+font-feature = -liga
+font-feature = -calt
+font-feature = -dlig
+background-opacity = 0.95
+background-blur-radius = 15
+window-height = 1000
+window-width = 1000
+command = /opt/homebrew/bin/tmux attach || /opt/homebrew/bin/tmux
+confirm-close-surface = false
+adjust-cell-height = -17%
