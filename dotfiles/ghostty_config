@@ -8,6 +8,6 @@ background-opacity = 0.95
 background-blur-radius = 15
 window-height = 1000
 window-width = 1000
-command = ~/Dropbox/code/iterm/iterm2_start_tmux.bash
+initial-command = ~/Dropbox/code/iterm/iterm2_start_tmux.bash
 confirm-close-surface = false
 adjust-cell-height = -17%
