@@ -35,11 +35,15 @@ alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/a
 alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias tmux='TERM=xterm-256color tmux'
+alias brewupdate='brew update && kill -9 $(ps wax | awk "tolower(\$0) ~ /better/ && !/awk/ {print \$1}") && brew upgrade -g bettertouchtool && open /Applications/BetterTouchTool.app && brew outdated -g && brew reinstall --force spotify slack obs syntax-highlight librewolf chromium --no-quarantine && brew upgrade -g'
 
 # only setup composer alias if needed
 if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
   alias composer='php /usr/local/bin/composer.phar'
 fi
+
+# temp fix for bw cli
+alias bw='NODE_OPTIONS="--no-deprecation" bw'
 
 
 # Conditional functions
@@ -253,7 +257,7 @@ function errCode() {
   if [[ $? == 0 ]]; then 
     echo -ne $Good
   else 
-    echo -ne $Bad
+    echo -ne "$Bad [$?]"
   fi
 }
 
