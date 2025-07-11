@@ -48,7 +48,12 @@ alias bw='NODE_OPTIONS="--no-deprecation" bw'
 
 # Conditional functions
 ## Add dash app support to bash
-[ -d "/Applications/Dash.app" ] && function dash() { open  "dash://$@" }
+if [ -d "/Applications/Dash.app" ]; then
+  function dash() {
+    open  "dash://$@"
+  }
+fi
+
 # PATH settings
 # setup php version if MAMPPro is present
 #if [ -f ~/Library/Preferences/de.appsolute.mamppro.plist ]; then
