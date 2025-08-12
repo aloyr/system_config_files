@@ -36,7 +36,7 @@ alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activat
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias tmux='TERM=xterm-256color tmux'
 alias brewupdate='brew update && kill -9 $(ps wax | awk "tolower(\$0) ~ /better/ && !/awk/ {print \$1}") && brew upgrade -g bettertouchtool && open /Applications/BetterTouchTool.app && brew outdated -g && brew reinstall --force spotify slack obs syntax-highlight librewolf chromium jetbrains-toolbox --no-quarantine && brew upgrade -g'
-alias brewmonitor='watch -n 20 'out="$(brew outdated -g)"; echo "$out" | wc -l; echo "$out"''
+#alias brewmonitor='watch -n 20 'out="$(brew outdated -g)"; echo "$out" | wc -l; echo "$out"''
 
 # only setup composer alias if needed
 if [[ -f /usr/local/bin/composer.phar && ! -f /usr/local/bin/composer ]]; then
