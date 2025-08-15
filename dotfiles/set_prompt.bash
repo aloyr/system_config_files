@@ -18,7 +18,7 @@ shopt -s histappend
 PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
 
 # some more ls aliases
-[[ $(uname -s) == 'Darwin' ]] && color="G" || color=" --color=auto"
+[[ $(uname -s) == 'Darwin' ]] && color=" --color=auto" || color=" --color=auto"
 [[ $(which busybox 2> /dev/null) ]] && color=""
 [[ $(which lsd 2> /dev/null) ]] && alias ls="lsd"
 alias ll="ls -l$color"
