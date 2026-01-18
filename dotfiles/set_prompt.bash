@@ -35,7 +35,7 @@ alias pvenv2='python2 -m virtualenv venv2_${PWD##*/} && . venv2_${PWD##*/}/bin/a
 alias pvenv3='python3 -m venv venv3_${PWD##*/} && . venv3_${PWD##*/}/bin/activate'
 alias stripcolors="sed \"s,$(printf '\033')\\[[0-9;]*[a-zA-Z],,g\""
 alias tmux='TERM=xterm-256color tmux'
-alias brewupdate='brew update && sudo kill -9 $(ps wax | awk "tolower(\$0) ~ /better/ && !/awk/ {print \$1}") && brew upgrade -g bettertouchtool && open /Applications/BetterTouchTool.app && brew outdated -g && brew upgrade -g && xattr -d com.apple.quarantine /Applications/OBS.app && xattr -d com.apple.quarantine /Applications/LibreWolf.app && xattr -d com.apple.quarantine /Applications/Syntax\ Highlight.app'
+alias brewupdate='brew update && sudo kill -9 $(ps wax | awk "tolower(\$0) ~ /better/ && !/awk/ {print \$1}") && brew upgrade -g bettertouchtool && open /Applications/BetterTouchTool.app && brew outdated -g && brew upgrade -g; xattr -d com.apple.quarantine /Applications/OBS.app; xattr -d com.apple.quarantine /Applications/LibreWolf.app; xattr -d com.apple.quarantine /Applications/Syntax\ Highlight.app'
 alias brewmonitor="watch -n 20 'out=\"\$(brew outdated -g)\"; echo \"\$out\" | wc -l; echo \"\$out\"'"
 
 # only setup composer alias if needed
